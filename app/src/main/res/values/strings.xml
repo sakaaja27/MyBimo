@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">MyBimo</string>
+    <string name="splash_text_1">Empowering Learning,</string>
+    <string name="splash_text_2">Anytime, Anywhere</string>
+    <string name="splash_text_3">with MyBimo</string>
+    <string name="sign_in_now">Sign In Now</string>
+    <string name="email_login">Email</string>
+    <string name="insert_your_email">Insert Your Email</string>
+    <string name="already_have_an_account_login">Already have an account? Login</string>
+    <string name="title_activity_dashboard_view">Dashboard_view</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_transform">Transform</string>
+    <string name="menu_reflow">Reflow</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_settings">Settings</string>
+
+    <string name="lorem_ipsum_title">Lorem Ipsum"</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply placeholder text of the printing and
+        typesetting industry. Lorem Ipsum has been the industry\'s standard placeholder text ever
+        since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+        type specimen book"
+    </string>
+    <string name="fab_content_description">Represents a view to invoke an action</string>
+    <string name="image_view_item_transform_content_description">Represents an image view in the
+        item
+    </string>
+
+    <!--    dashboard-->
+    <string name="search_hint"><font color="#908787">Search...</font></string>
+</resources>

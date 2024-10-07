@@ -1,0 +1,163 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="fragment.Profile">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_back"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:text="Profile"
+            android:textColor="@color/black"
+            android:textFontWeight="600"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="sans-serif"
+            android:text="Done"
+            android:textColor="#1B78F2"
+            android:textFontWeight="600"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_profile"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Name"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="600"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Profile Picture"
+            android:textColor="#1B78F2"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="600"
+            />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First Name"
+            android:layout_marginHorizontal="25dp"
+            android:layout_gravity="start"
+            android:fontFamily="sans-serif"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            />
+        <EditText
+            android:id="@+id/first_name"
+            android:layout_marginTop="10dp"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_login"
+            android:backgroundTint="@color/grey"
+            android:drawablePadding="5dp"
+            android:hint="Zhapiaa"
+            android:inputType="textPassword"
+            android:paddingHorizontal="25dp"
+            android:textColorHint="#7A7A7A"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+           />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First Name"
+            android:layout_marginHorizontal="25dp"
+            android:layout_gravity="start"
+            android:fontFamily="sans-serif"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            />
+        <EditText
+            android:id="@+id/last_name"
+            android:layout_marginTop="10dp"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_login"
+            android:backgroundTint="@color/grey"
+            android:drawablePadding="5dp"
+            android:hint="Bramasta"
+            android:inputType="textPassword"
+            android:paddingHorizontal="25dp"
+            android:textColorHint="#7A7A7A"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone Number"
+            android:layout_marginHorizontal="25dp"
+            android:layout_gravity="start"
+            android:fontFamily="sans-serif"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            />
+        <EditText
+            android:id="@+id/phone"
+            android:layout_marginTop="10dp"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_login"
+            android:backgroundTint="@color/grey"
+            android:drawablePadding="5dp"
+            android:hint="08571123212121"
+            android:inputType="textPassword"
+            android:paddingHorizontal="25dp"
+            android:textColorHint="#7A7A7A"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,109 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="fragment.Dashboard">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/mybimo_bluefont" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="235dp"
+                android:layout_marginTop="70dp"
+                >
+                <ImageView
+                    android:id="@+id/bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/hello_dashboard"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true"
+
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/jersey_10"
+                        android:gravity="center"
+                        android:text="Hallo Champs"
+                        android:textSize="40sp"
+                        android:textColor="#0B438C"
+                        android:layout_marginBottom="0dp"
+                        android:layout_marginRight="30dp"
+                        android:shadowColor="#66001AFF"
+                        android:shadowDx="0"
+                        android:shadowDy="12"
+                        android:shadowRadius="5"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/jersey_10"
+                        android:gravity="center"
+                        android:text="Ayo Belajar"
+                        android:textSize="40sp"
+                        android:textColor="#0B438C"
+                        android:layout_marginBottom="90dp"
+                        android:layout_marginRight="30dp"
+                        android:shadowColor="#66001AFF"
+                        android:shadowDx="0"
+                        android:shadowDy="12"
+                        android:shadowRadius="5"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+<!--            element card materi-->
+            <include layout="@layout/card_materi_merge"/>
+<!--            end-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="New Features"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="700"
+                android:paddingHorizontal="40dp"
+                android:textColor="@color/black"
+                />
+
+            <ImageView
+                android:layout_width="336dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/general_quiz"
+                android:layout_gravity="center"
+                android:layout_height="95dp"
+                android:background="@drawable/rectangle"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

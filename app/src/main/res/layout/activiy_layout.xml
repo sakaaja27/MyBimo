@@ -17,13 +17,13 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:itemRippleColor="#9C27B0"
-        app:itemTextColor="#9C27B0"
+        app:itemRippleColor="#24BAEC"
+        android:background="@drawable/nav_design"
+        app:itemTextColor="#24BAEC"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

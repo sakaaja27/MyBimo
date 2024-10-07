@@ -1,0 +1,137 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_blue"
+    tools:context="fragment.Payment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="309dp"
+            android:layout_height="228dp"
+            android:src="@drawable/payment_icon"
+            />
+
+        <RelativeLayout
+            android:layout_width="357dp"
+            android:layout_height="133dp"
+            >
+            <ImageView
+                android:id="@+id/border_bulanan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_payment"
+                />
+
+            <TextView
+                android:layout_width="106dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="sans-serif"
+                android:text="MOST POPULAR"
+                android:textColor="@color/white"
+                android:textFontWeight="1000"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:text="Monthly subscription"
+                android:layout_alignParentLeft="true"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="1000"
+                android:textSize="23sp"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                />
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Rp 150.000 / MO"
+                android:layout_alignParentRight="true"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="1000"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="15dp"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="357dp"
+            android:layout_height="133dp"
+            >
+            <ImageView
+                android:id="@+id/border_tahunan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_payment"
+                />
+
+            <TextView
+                android:layout_width="106dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="sans-serif"
+                android:text="BEST VALUE"
+                android:textColor="@color/white"
+                android:textFontWeight="1000"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:text="Annual subscription"
+                android:layout_alignParentLeft="true"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="1000"
+                android:textSize="23sp"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                />
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Rp 1.200.000 / YR"
+                android:layout_alignParentRight="true"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="1000"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="15dp"
+                />
+        </RelativeLayout>
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_width="344dp"
+            android:layout_height="50dp"
+            android:text="Continue"
+            android:fontFamily="sans-serif"
+            android:textSize="15sp"
+            android:textFontWeight="700"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            />
+
+    </LinearLayout>
+</FrameLayout>

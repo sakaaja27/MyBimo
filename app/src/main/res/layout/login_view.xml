@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login_view"
+    tools:context="auth.Login_view"
     android:background="@drawable/bg_blue"
     >
 
@@ -152,7 +152,7 @@
         android:id="@+id/rounded_login"
         android:layout_width="match_parent"
         android:layout_height="470sp"
-        android:src="@drawable/rounded"
+        android:src="@drawable/rounded_border_login"
         android:translationZ="-10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

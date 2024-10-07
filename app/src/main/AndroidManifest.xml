@@ -6,9 +6,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_apps"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo_apps"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyBimo"
         tools:targetApi="31">
@@ -16,16 +16,16 @@
             android:name="menu_vocab.Menu_vocabulary"
             android:exported="false" />
         <activity
-            android:name=".Dash_view"
+            android:name=".Main"
             android:exported="false" />
         <activity
-            android:name=".Register_view"
+            android:name="auth.Register_view"
             android:exported="false" />
         <activity
-            android:name=".Login_view"
+            android:name="auth.Login_view"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="auth.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

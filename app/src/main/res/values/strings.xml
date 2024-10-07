@@ -33,4 +33,6 @@
 
     <!--    dashboard-->
     <string name="search_hint"><font color="#908787">Search...</font></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

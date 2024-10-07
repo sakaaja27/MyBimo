@@ -1,4 +1,4 @@
-package com.example.mybimo;
+package auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,9 @@ import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.mybimo.Main;
+import com.example.mybimo.R;
 
 public class Login_view extends AppCompatActivity {
 
@@ -30,7 +30,7 @@ public class Login_view extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login_view.this, Dash_view.class);
+                Intent intent = new Intent(Login_view.this, Main.class);
                 startActivity(intent);
                 finish();
             }

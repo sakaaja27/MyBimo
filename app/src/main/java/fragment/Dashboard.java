@@ -3,12 +3,20 @@ package fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mybimo.R;
+
+import java.util.ArrayList;
+
+import carousel.Materi;
+import carousel.MateriAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,14 +25,8 @@ import com.example.mybimo.R;
  */
 public class Dashboard extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView recyclerView;
+    private MateriAdapter materiAdapter;
 
     public Dashboard() {
         // Required empty public constructor
@@ -42,8 +44,8 @@ public class Dashboard extends Fragment {
     public static Dashboard newInstance(String param1, String param2) {
         Dashboard fragment = new Dashboard();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString("param1", param1);
+        args.putString("param2", param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,16 +53,27 @@ public class Dashboard extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+
+        ArrayList<Materi> materiArrayList = new ArrayList<>();
+        materiArrayList.add(new Materi(R.drawable.icon_vocab, "Vocabulary"));
+        materiArrayList.add(new Materi(R.drawable.icon_grammer, "Grammerly"));
+        materiArrayList.add(new Materi(R.drawable.icon_listening, "Listening"));
+        materiArrayList.add(new Materi(R.drawable.icon_pronount, "Pronount"));
+        materiArrayList.add(new Materi(R.drawable.icon_listening, "Listening"));
+
+        materiAdapter = new MateriAdapter(getActivity(), materiArrayList);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+        recyclerView.setAdapter(materiAdapter);
+
+        return view;
     }
 }

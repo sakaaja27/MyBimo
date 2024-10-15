@@ -1,5 +1,6 @@
 package fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
+import Payment.AfterPayment;
+import android.widget.RelativeLayout;
 
 import com.example.mybimo.R;
+
+import auth.Login_view;
+import auth.Register_view;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +26,9 @@ import com.example.mybimo.R;
  * create an instance of this fragment.
  */
 public class Payment extends Fragment {
+    private ImageView splashImage;
+    private Button btn_submit;
+//    private RelativeLayout splashImagev2;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +74,25 @@ public class Payment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_payment, container, false);
+        View view =  inflater.inflate(R.layout.fragment_payment, container, false);
+        splashImage = view.findViewById(R.id.animationpayment);
+        btn_submit = view.findViewById(R.id.submit);
+//        splashImagev2 = view.findViewById(R.id.animation_pay);
+
+        //        animation
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.animasi);
+        splashImage.startAnimation(animation);
+//        splashImagev2.startAnimation(animation);
+
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AfterPayment.class);
+                startActivity(intent);
+            }
+        });
+
+
+        return view;
     }
 }

@@ -14,6 +14,19 @@
         android:layout_marginTop="40dp"
         android:src="@drawable/mybimo_bluefont" />
 
+    <TextView
+        android:id="@+id/auth_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/auth_name"
+        android:textSize="20sp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="sans-serif"
+        android:textFontWeight="700"
+        android:paddingHorizontal="40dp"
+        />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -81,7 +94,25 @@
 
 
 <!--            element card materi-->
-            <include layout="@layout/card_materi_merge"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Materi"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="700"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="40dp"
+                android:textColor="@color/black" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
+                android:scrollbars="vertical"
+                android:layout_marginTop="10dp" />
+<!--            <include layout="@layout/card_materi_merge"/>-->
 <!--            end-->
 
             <TextView
@@ -105,5 +136,4 @@
                 />
         </LinearLayout>
     </ScrollView>
-
 </FrameLayout>

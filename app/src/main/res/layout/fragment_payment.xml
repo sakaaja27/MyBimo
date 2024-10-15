@@ -2,9 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_blue"
+    android:background="@drawable/bg_white"
     tools:context="fragment.Payment">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/mybimo_bluefont" />
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,115 +19,96 @@
         android:gravity="center"
         >
 
+
         <ImageView
+            android:id="@+id/animationpayment"
             android:layout_width="309dp"
             android:layout_height="228dp"
             android:src="@drawable/payment_icon"
             />
 
         <RelativeLayout
-            android:layout_width="357dp"
-            android:layout_height="133dp"
+            android:id="@+id/animation_pay"
+            android:layout_width="343dp"
+            android:layout_height="197dp"
             >
+
             <ImageView
-                android:id="@+id/border_bulanan"
+                android:id="@+id/pay_card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/border_payment"
-                />
+                android:background="@drawable/border_payment" />
 
             <TextView
-                android:layout_width="106dp"
+                android:id="@+id/status_pay"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif"
-                android:text="MOST POPULAR"
+                android:text="Belum Bayar"
                 android:textColor="@color/white"
-                android:textFontWeight="1000"
+                android:textFontWeight="500"
                 android:textSize="13sp" />
 
             <TextView
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="sans-serif"
                 android:text="Monthly subscription"
-                android:layout_alignParentLeft="true"
-                android:fontFamily="sans-serif"
-                android:textFontWeight="1000"
-                android:textSize="23sp"
                 android:textColor="@color/white"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="30dp"
-                />
+                android:textFontWeight="1000"
+                android:textSize="23sp" />
 
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="140dp"
+                android:fontFamily="sans-serif"
                 android:text="Rp 150.000 / MO"
-                android:layout_alignParentRight="true"
-                android:fontFamily="sans-serif"
-                android:textFontWeight="1000"
-                android:textSize="18sp"
                 android:textColor="@color/white"
-                android:layout_centerInParent="true"
-                android:layout_marginRight="15dp"
-                />
+                android:textFontWeight="1000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="55dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="123 456 789 012"
+                android:textColor="@color/white"
+                android:textFontWeight="1000"
+                android:textSize="30sp" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="357dp"
-            android:layout_height="133dp"
-            >
-            <ImageView
-                android:id="@+id/border_tahunan"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/border_payment"
-                />
-
-            <TextView
-                android:layout_width="106dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="15dp"
-                android:fontFamily="sans-serif"
-                android:text="BEST VALUE"
-                android:textColor="@color/white"
-                android:textFontWeight="1000"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:text="Annual subscription"
-                android:layout_alignParentLeft="true"
-                android:fontFamily="sans-serif"
-                android:textFontWeight="1000"
-                android:textSize="23sp"
-                android:textColor="@color/white"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="30dp"
-                />
-
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="Rp 1.200.000 / YR"
-                android:layout_alignParentRight="true"
-                android:fontFamily="sans-serif"
-                android:textFontWeight="1000"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:layout_centerInParent="true"
-                android:layout_marginRight="15dp"
-                />
-        </RelativeLayout>
         <Button
+            android:id="@+id/upload_file"
+            android:layout_marginTop="20dp"
+            android:layout_width="344dp"
+            android:layout_height="50dp"
+            android:text="Upload Bukti Pembayaran"
+            android:fontFamily="sans-serif"
+            android:textSize="15sp"
+            android:textFontWeight="700"
+            android:textColor="@color/white"
+            android:backgroundTint="#4285F4"
+            />
+        <Button
+            android:id="@+id/submit"
             android:layout_marginTop="20dp"
             android:layout_width="344dp"
             android:layout_height="50dp"
@@ -129,8 +116,8 @@
             android:fontFamily="sans-serif"
             android:textSize="15sp"
             android:textFontWeight="700"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/white"
+            android:textColor="@color/white"
+            android:backgroundTint="#4285F4"
             />
 
     </LinearLayout>

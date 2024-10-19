@@ -19,17 +19,33 @@ import fragment.Profile;
 
 public class Main extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
+    public static String RequestUserId;
+    public static String RequestUsername;
+    public static String RequestEmail;
+    public static String RequestPhone;
+    public static String RequestRole;
+    public static String RequestPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activiy_layout);
-
         loadFragment(new Dashboard());
         BottomNavigationView navigationView = findViewById(R.id.navigation);
         navigationView.setOnItemSelectedListener(this);
-
         navigationView.setSelectedItemId(R.id.fr_home);
+
+        // Ambil data dari intent
+        RequestUserId = getIntent().getStringExtra("id");
+        RequestUsername = getIntent().getStringExtra("username");
+        RequestEmail = getIntent().getStringExtra("email");
+        RequestPhone = getIntent().getStringExtra("phone");
+        RequestRole = getIntent().getStringExtra("role");
+        RequestPassword = getIntent().getStringExtra("password");
+
+
+
 
 //
     }

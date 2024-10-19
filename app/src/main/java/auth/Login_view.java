@@ -28,6 +28,10 @@ import com.example.mybimo.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,13 +88,35 @@ public class Login_view extends AppCompatActivity {
                     RequestQueue requestQueue = Volley.newRequestQueue(Login_view.this);
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, DB_Contract.urlLogin, new Response.Listener<String>() {
                         @Override
+
                         public void onResponse(String response) {
-                            if (response.equals("Login Berhasil")){
-                                Toast.makeText(getApplicationContext(),"Login Berhasil",Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(),Main.class));
-                            }else {
-                                Toast.makeText(getApplicationContext(),"Login Gagal",Toast.LENGTH_SHORT).show();
+                            try {
+                                JSONObject jsonRespon = new JSONObject(response);
+                                if (jsonRespon.getString("status").equals("Login Berhasil")){
+                                    String id = jsonRespon.getString("id");
+                                    String username = jsonRespon.getString("username");
+                                    String email = jsonRespon.getString("email");
+                                    String phone = jsonRespon.getString("phone");
+                                    String role = jsonRespon.getString("role");
+                                    String password = jsonRespon.getString("password");
+
+
+                                    Toast.makeText(getApplicationContext(),"Login Berhasil",Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), Main.class);
+                                    intent.putExtra("id", id);
+                                    intent.putExtra("username", username);
+                                    intent.putExtra("email", email);
+                                    intent.putExtra("phone", phone);
+                                    intent.putExtra("role", role);
+                                    intent.putExtra("password", password);
+                                    startActivity(intent);
+                                }else {
+                                    Toast.makeText(getApplicationContext(),"Login Gagal",Toast.LENGTH_SHORT).show();
+                                }
+                            }catch (JSONException e){
+                                e.printStackTrace();
                             }
+
                         }
                     }, new Response.ErrorListener() {
                         @Override

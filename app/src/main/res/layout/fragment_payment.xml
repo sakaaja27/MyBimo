@@ -55,41 +55,40 @@
                 android:textSize="13sp" />
 
             <TextView
-                android:layout_width="170dp"
+                android:id="@+id/nama_pembayaran"
+                android:layout_width="113dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="35dp"
                 android:fontFamily="sans-serif"
-                android:text="Monthly subscription"
                 android:textColor="@color/white"
                 android:textFontWeight="1000"
-                android:textSize="23sp" />
+                android:textSize="22sp" />
 
             <TextView
-                android:layout_width="150dp"
+                android:id="@+id/harga"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="140dp"
+                android:layout_marginBottom="130dp"
                 android:fontFamily="sans-serif"
-                android:text="Rp 150.000 / MO"
                 android:textColor="@color/white"
                 android:textFontWeight="1000"
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/nomor_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="55dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="30dp"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
-                android:text="123 456 789 012"
                 android:textColor="@color/white"
                 android:textFontWeight="1000"
                 android:textSize="30sp" />

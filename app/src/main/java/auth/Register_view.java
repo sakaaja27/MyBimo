@@ -83,17 +83,18 @@ public class Register_view extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String user = userlEditText.getText().toString();
-                String phone = passEditText.getText().toString();
                 String mail = emailEditText.getText().toString();
+                String phone = passEditText.getText().toString();
                 String password = passEditText.getText().toString();
 
                 if (user.isEmpty() || mail.isEmpty() || phone.isEmpty() || password.isEmpty()){
                     Toast.makeText(Register_view.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                } else if (password.length() < 8) {
-                    Toast.makeText(Register_view.this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
-                } else if (phone.length() < 12) {
+                }else if (phone.length() <= 12) {
                     Toast.makeText(Register_view.this, "Phone number must be at least 12 number", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else if (password.length() < 8) {
+                    Toast.makeText(Register_view.this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
+                }  else {
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, DB_Contract.urlRegister, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

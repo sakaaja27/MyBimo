@@ -19,11 +19,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:text="@string/auth_name"
         android:textSize="20sp"
         android:layout_marginTop="40dp"
-        android:fontFamily="sans-serif"
-        android:textFontWeight="700"
+        android:fontFamily="@font/jersey_10"
+        android:textColor="#0B438C"
+        android:textFontWeight="400"
         android:paddingHorizontal="40dp"
         />
 

@@ -2,6 +2,7 @@ package fragment;
 
 import static auth.DB_Contract.ip;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -32,13 +33,14 @@ import java.util.List;
 import Adapter.GetUser;
 import carousel.Materi;
 import carousel.MateriAdapter;
+import materi.MateriVocab;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Dashboard#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Dashboard extends Fragment {
+public class Dashboard extends Fragment{
 //    ambil data RequestUserid pada class main
     private static String UserId;
     private RecyclerView recyclerView;
@@ -92,8 +94,40 @@ public class Dashboard extends Fragment {
         materiArrayList.add(new Materi(R.drawable.icon_listening, "Listening"));
 
         materiAdapter = new MateriAdapter(getActivity(), materiArrayList);
+        materiAdapter = new MateriAdapter(materiArrayList, getActivity(), new MateriAdapter.OnClickListener() {
+                    @Override
+                    public void onClickListener(int materi) {
+                        // untuk klik setiap item materi
+                        switch (materi) {
+                            case 0:
+                                // buka ke sub materi vocab
+                                startActivity(new Intent(getActivity(), MateriVocab.class));
+                                break;
+        //                    case 1:
+        //                        // buka ke sub materi grammerly
+        //                        startActivity(new Intent(getActivity(), GrammerlyActivity.class));
+        //                        break;
+        //                    case 2:
+        //                        // buka ke sub materi listening
+        //                        startActivity(new Intent(getActivity(), ListeningActivity.class));
+        //                        break;
+        //                    case 3:
+        //                        // buka ke sub materi pronoun
+        //                        startActivity(new Intent(getActivity(), PronountActivity.class));
+        //                        break;
+                            default:
+                                Toast.makeText(getActivity(), "Belum ada materi", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                });
+
+
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
         recyclerView.setAdapter(materiAdapter);
+
+
+
 
 
         // Ambil id pengguna dari variable statis di Main
@@ -162,4 +196,5 @@ public class Dashboard extends Fragment {
         // Tambahkan request ke queue
         Volley.newRequestQueue(requireContext()).add(jsonArrayRequest);
     }
+
 }

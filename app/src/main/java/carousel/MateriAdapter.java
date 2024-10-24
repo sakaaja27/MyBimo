@@ -16,10 +16,17 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
 
     private ArrayList<Materi> materiArrayList;
     private Context context;
+    private OnClickListener onClickListener;
 
     public MateriAdapter(Context context, ArrayList<Materi> materiArrayList) {
         this.context = context;
         this.materiArrayList = materiArrayList;
+    }
+
+    public MateriAdapter(ArrayList<Materi> materiArrayList, Context context, OnClickListener onClickListener) {
+        this.materiArrayList = materiArrayList;
+        this.context = context;
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -33,6 +40,8 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
         Materi materi = materiArrayList.get(position);
         holder.imageView.setImageResource(materi.getIcon());
         holder.textView.setText(materi.getNama());
+        holder.itemView(materiArrayList.get(position),onClickListener);
+
     }
 
     @Override
@@ -48,6 +57,22 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
             super(itemView);
             imageView = itemView.findViewById(R.id.icon_image);
             textView = itemView.findViewById(R.id.text_view);
+
         }
+        // buat click listener materi di dashboard
+
+        public void itemView(Materi materi, OnClickListener onClickListener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickListener.onClickListener(getAdapterPosition());
+                }
+            });
+        }
+    }
+
+        //interface clicklistener
+    public interface OnClickListener{
+        void onClickListener(int materi);
     }
 }

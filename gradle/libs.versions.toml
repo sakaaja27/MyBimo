@@ -15,6 +15,11 @@ navigationUi = "2.6.0"
 materialVersion = "1.12.0"
 volley = "1.2.1"
 
+
+
+
+
+
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -31,6 +36,7 @@ navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version
 google-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version = "4.16.0" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 

@@ -1,8 +1,12 @@
 package fragment;
 
+import static android.app.Activity.RESULT_OK;
 import static auth.DB_Contract.ip;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,11 +27,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mybimo.R;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +45,7 @@ public class Payment extends Fragment {
     public static final String URL = "http://" + ip + "/mybimo/getData/payment.php";
     private ImageView splashImage;
     private Button btn_submit;
+    private Button btn_upload;
     private TextView namaPembayaran;
     private TextView harga;
     private TextView nomorBank;
@@ -56,12 +64,23 @@ public class Payment extends Fragment {
         btn_submit = view.findViewById(R.id.submit);
         namaPembayaran = view.findViewById(R.id.nama_pembayaran);
         harga = view.findViewById(R.id.harga);
+        btn_upload = view.findViewById(R.id.upload_file);
         nomorBank = view.findViewById(R.id.nomor_bank);
 
         // Animation
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.animasi);
         splashImage.startAnimation(animation);
 
+        btn_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.with(Payment.this)
+                        .crop()	    			//Crop image(Optional), Check Customization for more option
+                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+            }
+        });
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +94,10 @@ public class Payment extends Fragment {
 
         return view;
     }
+
+   
+
+
 
     private void fetchPayment() {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null,

@@ -58,7 +58,7 @@ public class Idiom extends AppCompatActivity {
         setContentView(R.layout.activity_idiom);
 
         nama_sub= findViewById(R.id.nama_sub);
-        webView = findViewById(R.id.webview);
+        webView = findViewById(R.id.pdfView);
         // Fetch data
         fetchIdiom();
     }
@@ -82,7 +82,7 @@ public class Idiom extends AppCompatActivity {
                                 if (nama_sub != null ) {
                                     nama_sub.setText(materi.getNamaSub());
                                     String pdfData = materi.getPdfData();
-                                    webView = findViewById(R.id.webview);
+                                    webView = findViewById(R.id.pdfView);
                                     // Mengatur WebView
                                     WebSettings webSettings = webView.getSettings();
                                     webSettings.setJavaScriptEnabled(true);

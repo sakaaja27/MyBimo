@@ -5,7 +5,7 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
 material = "1.12.0"
-activity = "1.9.2"
+activity = "1.9.3"
 constraintlayout = "2.1.4"
 recyclerview = "1.3.0"
 lifecycleLivedataKtx = "2.8.4"
@@ -14,11 +14,8 @@ navigationFragment = "2.6.0"
 navigationUi = "2.6.0"
 materialVersion = "1.12.0"
 volley = "1.2.1"
-
-
-
-
-
+imagepicker = "2.1"
+androidpdf = "3.2.0-beta.3"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -36,7 +33,8 @@ navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version
 google-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version = "4.16.0" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
-
+imagepicker = { group = "com.github.dhaval2404", name = "imagepicker", version.ref = "imagepicker" }
+androidpdf = { group = "com.github.mhiew",name="android-pdf-viewer",version.ref = "androidpdf"}
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 

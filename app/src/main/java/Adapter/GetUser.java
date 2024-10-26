@@ -5,18 +5,28 @@ public class GetUser {
     private String username;
     private String email;
     private String phone;
+    private String uploadImage;
     private String password;
 
-    public GetUser(String id, String username, String email,String phone, String password) {
+    public GetUser(String id, String username, String email,String phone,String uploadImage, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.phone = phone;
+        this.uploadImage = uploadImage;
         this.password = password;
         }
 
     // Getter dan Setter untuk setiap atribut
 
+
+    public String getUploadImage() {
+        return uploadImage;
+    }
+
+    public void setUploadImage(String uploadImage) {
+        this.uploadImage = uploadImage;
+    }
 
     public String getId() {
         return id;

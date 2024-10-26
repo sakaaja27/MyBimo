@@ -33,6 +33,7 @@ import java.util.List;
 import Adapter.GetUser;
 import carousel.Materi;
 import carousel.MateriAdapter;
+import materi.MateriGrammerly;
 import materi.MateriVocab;
 
 /**
@@ -47,6 +48,7 @@ public class Dashboard extends Fragment{
     private MateriAdapter materiAdapter;
     private TextView auth_name;
     private View view;
+    private ArrayList<Materi> materiArrayList;
     List<GetUser> getUserList = new ArrayList<>();
 
 
@@ -85,49 +87,12 @@ public class Dashboard extends Fragment{
 
         recyclerView = view.findViewById(R.id.recycler_view);
         auth_name = view.findViewById(R.id.auth_name);
+        materiArrayList = new ArrayList<>();
 
-        ArrayList<Materi> materiArrayList = new ArrayList<>();
-        materiArrayList.add(new Materi(R.drawable.icon_vocab, "Vocabulary"));
-        materiArrayList.add(new Materi(R.drawable.icon_grammer, "Grammerly"));
-        materiArrayList.add(new Materi(R.drawable.icon_listening, "Listening"));
-        materiArrayList.add(new Materi(R.drawable.icon_pronount, "Pronount"));
-        materiArrayList.add(new Materi(R.drawable.icon_listening, "Listening"));
-
-        materiAdapter = new MateriAdapter(getActivity(), materiArrayList);
-        materiAdapter = new MateriAdapter(materiArrayList, getActivity(), new MateriAdapter.OnClickListener() {
-                    @Override
-                    public void onClickListener(int materi) {
-                        // untuk klik setiap item materi
-                        switch (materi) {
-                            case 0:
-                                // buka ke sub materi vocab
-                                startActivity(new Intent(getActivity(), MateriVocab.class));
-                                break;
-        //                    case 1:
-        //                        // buka ke sub materi grammerly
-        //                        startActivity(new Intent(getActivity(), GrammerlyActivity.class));
-        //                        break;
-        //                    case 2:
-        //                        // buka ke sub materi listening
-        //                        startActivity(new Intent(getActivity(), ListeningActivity.class));
-        //                        break;
-        //                    case 3:
-        //                        // buka ke sub materi pronoun
-        //                        startActivity(new Intent(getActivity(), PronountActivity.class));
-        //                        break;
-                            default:
-                                Toast.makeText(getActivity(), "Belum ada materi", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                    }
-                });
+        fetchMateriData();
 
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
-        recyclerView.setAdapter(materiAdapter);
-
-
-
+//        dinamis materi
 
 
         // Ambil id pengguna dari variable statis di Main
@@ -140,6 +105,43 @@ public class Dashboard extends Fragment{
             Toast.makeText(getContext(), "User  ID tidak ditemukan", Toast.LENGTH_SHORT).show();
         }
         return view;
+    }
+
+//    materi
+    private void fetchMateriData(){
+        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getmateriawal.php";
+        String imageUrl = "http://" + ip +"/website%20mybimo/mybimo/src/getData/";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        String fotoIcon = imageUrl + jsonObject.getString("foto_icon");
+                        String nama = jsonObject.getString("judul_materi");
+
+                        materiArrayList.add(new Materi(fotoIcon, nama));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                setupRecyclerView();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(),"ERROR MATERI"+error.getMessage(),Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        Volley.newRequestQueue(getActivity()).add(jsonArrayRequest);
+    }
+
+    private void setupRecyclerView(){
+        materiAdapter = new MateriAdapter(getActivity(),materiArrayList);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+        recyclerView.setAdapter(materiAdapter);
     }
 
     private void fetchUser (String UserId) {
@@ -158,6 +160,7 @@ public class Dashboard extends Fragment{
                                         jsonObject.getString("username"),
                                         jsonObject.getString("email"),
                                         jsonObject.getString("phone"),
+                                        jsonObject.getString("upload_image"),
                                         jsonObject.getString("password")
                                 );
 

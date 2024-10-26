@@ -1,16 +1,16 @@
 package carousel;
 
 public class Materi {
-    private int icon;
+    private String fotoIcon;
     private String nama;
 
-    public Materi(int icon, String nama) {
-        this.icon = icon;
+    public Materi(String fotoIcon, String nama) {
+        this.fotoIcon = fotoIcon;
         this.nama = nama;
     }
 
-    public int getIcon() {
-        return icon;
+    public String getIcon() {
+        return fotoIcon;
     }
 
     public String getNama() {

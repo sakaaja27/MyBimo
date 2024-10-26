@@ -33,6 +33,7 @@ android {
         viewBinding = true
     }
 
+
 }
 
 dependencies {
@@ -44,8 +45,10 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.google.material)
     implementation(libs.volley)
-
+    implementation(libs.imagepicker)
+    implementation(libs.androidpdf)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }

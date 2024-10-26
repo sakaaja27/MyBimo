@@ -3,7 +3,10 @@ package auth;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -44,6 +47,7 @@ public class Login_view extends AppCompatActivity {
     private TextInputEditText emailEditText;
     private TextInputLayout passLayout;
     private TextInputEditText passEditText;
+    private Preference preference;
     Button btn_login;
     TextView register;
 //    private  DBHelper DBHelper;
@@ -61,6 +65,13 @@ public class Login_view extends AppCompatActivity {
         register = findViewById(R.id.register);
         btn_login = findViewById(R.id.btn_login);
 
+//        preference = new Preference(this);
+//        preference.checkLogin();
+//        if (preference.isUserLoggedIn()) {
+//            Intent intent = new Intent(Login_view.this, Main.class);
+//            startActivity(intent);
+//            finish();
+//        }
 //        DBHelper = new DBHelper(this);
         splashImageView =  findViewById(R.id.animationmybimo);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.animasi);
@@ -98,6 +109,7 @@ public class Login_view extends AppCompatActivity {
                                     String email = jsonRespon.getString("email");
                                     String phone = jsonRespon.getString("phone");
                                     String role = jsonRespon.getString("role");
+                                    String uploadImage = jsonRespon.getString("upload_image");
                                     String password = jsonRespon.getString("password");
 
 
@@ -108,6 +120,7 @@ public class Login_view extends AppCompatActivity {
                                     intent.putExtra("email", email);
                                     intent.putExtra("phone", phone);
                                     intent.putExtra("role", role);
+                                    intent.putExtra("upload_image", uploadImage);
                                     intent.putExtra("password", password);
                                     startActivity(intent);
                                 }else {
@@ -121,6 +134,7 @@ public class Login_view extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            System.out.println(error);
                             Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_SHORT).show();
                         }
                     }){

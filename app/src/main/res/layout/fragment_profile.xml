@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bgprofile"
     tools:context="fragment.Profile">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,7 +11,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         >
 
         <ImageView
@@ -18,146 +19,107 @@
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_back"
+            android:src="@drawable/mybimo_bluefont"
             />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif"
-            android:text="Profile"
-            android:textColor="@color/black"
-            android:textFontWeight="600"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="20dp"
-            android:fontFamily="sans-serif"
-            android:text="Done"
-            android:textColor="#1B78F2"
-            android:textFontWeight="600"
-            android:textSize="18sp"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        >
-        <ImageView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_profile"
+            android:layout_marginTop="60dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
+            android:padding="5dp"
             android:src="@drawable/icon_profile"
+            android:background="@color/black"
+            app:strokeColor="@color/black"
+            app:strokeWidth="3dp"
+            app:shapeAppearanceOverlay="@style/circular"
             />
         <TextView
+            android:id="@+id/auth_name"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your Name"
+            android:layout_gravity="center"
+
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:fontFamily="sans-serif"
-            android:textFontWeight="600"
+            android:textFontWeight="400"
             />
 
         <TextView
+            android:id="@+id/email"
+            android:layout_marginTop="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change Profile Picture"
-            android:textColor="#1B78F2"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif"
-            android:textFontWeight="600"
-            />
-
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="First Name"
-            android:layout_marginHorizontal="25dp"
-            android:layout_gravity="start"
-            android:fontFamily="sans-serif"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            />
-        <EditText
-            android:id="@+id/first_name"
-            android:layout_marginTop="10dp"
-            android:layout_width="330dp"
-            android:layout_height="50dp"
-            android:background="@drawable/rounded_login"
-            android:backgroundTint="@color/grey"
-            android:drawablePadding="5dp"
-            android:hint="Zhapiaa"
-            android:inputType="textPassword"
-            android:paddingHorizontal="25dp"
-            android:textColorHint="#7A7A7A"
+            android:layout_gravity="center"
+            android:textColor="#02ABFA"
             android:textSize="15sp"
-            android:textColor="@color/black"
-           />
-
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="First Name"
-            android:layout_marginHorizontal="25dp"
-            android:layout_gravity="start"
             android:fontFamily="sans-serif"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            />
-        <EditText
-            android:id="@+id/last_name"
-            android:layout_marginTop="10dp"
-            android:layout_width="330dp"
-            android:layout_height="50dp"
-            android:background="@drawable/rounded_login"
-            android:backgroundTint="@color/grey"
-            android:drawablePadding="5dp"
-            android:hint="Bramasta"
-            android:inputType="textPassword"
-            android:paddingHorizontal="25dp"
-            android:textColorHint="#7A7A7A"
-            android:textSize="15sp"
-            android:textColor="@color/black"
+            android:textFontWeight="400"
             />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_editprofile"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phone Number"
-            android:layout_marginHorizontal="25dp"
-            android:layout_gravity="start"
-            android:fontFamily="sans-serif"
-            android:textSize="20dp"
-            android:textColor="@color/black"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_prof"
+            android:drawableStart="@drawable/icon_prof"
+            android:drawablePadding="30dp"
+            android:paddingStart="20dp"
+            android:text="Edit Profile"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            style="@android:style/Widget.Button"
+            android:textAlignment="viewStart"
             />
-        <EditText
-            android:id="@+id/phone"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_reset"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
-            android:layout_width="330dp"
-            android:layout_height="50dp"
-            android:background="@drawable/rounded_login"
-            android:backgroundTint="@color/grey"
-            android:drawablePadding="5dp"
-            android:hint="08571123212121"
-            android:inputType="textPassword"
-            android:paddingHorizontal="25dp"
-            android:textColorHint="#7A7A7A"
-            android:textSize="15sp"
-            android:textColor="@color/black"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_prof"
+            android:drawableStart="@drawable/icon_pass"
+            android:drawablePadding="30dp"
+            android:paddingStart="20dp"
+            android:text="Reset Password"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            style="@android:style/Widget.Button"
+            android:textAlignment="viewStart"
             />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/sign_out"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_prof"
+            android:drawableStart="@drawable/icon_signout"
+            android:drawablePadding="30dp"
+            android:paddingStart="20dp"
+            android:text="Sign Out"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            style="@android:style/Widget.Button"
+            android:textAlignment="viewStart"
+            />
+
+
+
     </LinearLayout>
+
 
 </FrameLayout>

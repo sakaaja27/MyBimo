@@ -1,13 +1,16 @@
 package carousel;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.mybimo.R;
 
 import java.util.ArrayList;
@@ -36,11 +39,18 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Materi materi = materiArrayList.get(position);
-        holder.imageView.setImageResource(materi.getIcon());
+        Glide.with(context).load(materi.getIcon()).into(holder.imageView);
+//        holder.itemView(materiArrayList.get(position),onClickListener);
+
         holder.textView.setText(materi.getNama());
-        holder.itemView(materiArrayList.get(position),onClickListener);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (onClickListener != null){
+                onClickListener.onClickListener(position);
+            }
+        });
 
     }
 
@@ -61,18 +71,19 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
         }
         // buat click listener materi di dashboard
 
-        public void itemView(Materi materi, OnClickListener onClickListener) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onClickListener.onClickListener(getAdapterPosition());
-                }
-            });
-        }
+//        public void itemView(Materi materi, OnClickListener onClickListener) {
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    onClickListener.onClickListener(getAdapterPosition());
+//                }
+//            });
+//        }
     }
 
         //interface clicklistener
     public interface OnClickListener{
         void onClickListener(int materi);
     }
+
 }

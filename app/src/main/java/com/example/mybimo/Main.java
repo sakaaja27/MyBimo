@@ -1,7 +1,10 @@
 package com.example.mybimo;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
@@ -12,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import auth.Preference;
 import fragment.Course;
 import fragment.Dashboard;
 import fragment.Payment;
@@ -25,11 +29,13 @@ public class Main extends AppCompatActivity implements NavigationBarView.OnItemS
     public static String RequestPhone;
     public static String RequestRole;
     public static String RequestPassword;
+    public static String uploadImage;
+    private Preference preference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        EdgeToEdge.enable(this)     ;
         setContentView(R.layout.activiy_layout);
         loadFragment(new Dashboard());
         BottomNavigationView navigationView = findViewById(R.id.navigation);
@@ -42,12 +48,10 @@ public class Main extends AppCompatActivity implements NavigationBarView.OnItemS
         RequestEmail = getIntent().getStringExtra("email");
         RequestPhone = getIntent().getStringExtra("phone");
         RequestRole = getIntent().getStringExtra("role");
+        uploadImage = getIntent().getStringExtra("upload_image");
         RequestPassword = getIntent().getStringExtra("password");
 
 
-
-
-//
     }
     private boolean loadFragment(Fragment fragment){
         if (fragment != null){

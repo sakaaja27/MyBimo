@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,35 +13,44 @@ import com.example.mybimo.R;
 
 import java.util.ArrayList;
 
-
-import carousel.MateriSub;
-
 public class AdapterSubGrammer extends RecyclerView.Adapter<AdapterSubGrammer.ViewHolder> {
 
     private ArrayList<MateriSub> materiSubArrayList;
     private Context context;
-    private AdapterSubGrammer.OnClickListener onClickListener;
+    private OnClickListener onClickListener;
 
+    //buat parameter dan isi value dari private inisiasi var tdi dengan value parameter
     public AdapterSubGrammer(Context context, ArrayList<MateriSub> materiSubArrayList) {
         this.context = context;
         this.materiSubArrayList = materiSubArrayList;
     }
+    //buat parameter dan isi value dari private inisiasi var tdi dengan value parameter
     public AdapterSubGrammer(ArrayList<MateriSub> materiSubArrayList, Context context, OnClickListener onClickListener) {
         this.materiSubArrayList = materiSubArrayList;
         this.context = context;
         this.onClickListener = onClickListener;
     }
     @Override
-    public AdapterSubGrammer.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.submateri_merge, parent, false);
-        return new AdapterSubGrammer.ViewHolder(view);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        adapter hmpir sama yg wktu itu kukirim
+//        kujelasin yg penting aja,OncreateViewHolder ini fungsinya buat ngebuat viewholder
+//        yang dimana ngambil layout sub materi yang tdi udah dibuat di xml
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.submaterigrammar, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(AdapterSubGrammer.ViewHolder holder, int position) {
-        MateriSub materi = materiSubArrayList.get(position);
-        holder.textView.setText(materi.getNama());
+//        Fungsinya onBindViewHolder ini untuk inisiasi data dari arraylist ke viewholder
+//        yang nantinya agar bisa onclick di arraylist recyclermu
+        MateriSub materiSub = materiSubArrayList.get(position);
+        holder.textView.setText(materiSub.getNama());
         holder.itemView(materiSubArrayList.get(position),onClickListener);
+        holder.itemView.setOnClickListener(v -> {
+            if (onClickListener != null){
+                onClickListener.onClickListener(position);
+            }
+        });
 
     }
 
@@ -49,17 +59,20 @@ public class AdapterSubGrammer extends RecyclerView.Adapter<AdapterSubGrammer.Vi
         return materiSubArrayList.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-//        public ImageView imageView;
+        //buat inisiasi var apa yg kmu perlukan buat ditampilin di recycle contoh
+//        aku kan tdi di submateri xml itu mo nampilin image sama text nah jadi idnya itu dimasukkin disini
+        public ImageView imageView;
         public TextView textView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.text_view);
-
+            imageView = itemView.findViewById(R.id.image_sub);
+            textView = itemView.findViewById(R.id.text_subgrammar);
         }
-        // buat click listener materi di dashboard
 
+        //buat method untuk onclick
         public void itemView(MateriSub materiSub, OnClickListener onClickListener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,6 +84,6 @@ public class AdapterSubGrammer extends RecyclerView.Adapter<AdapterSubGrammer.Vi
     }
     //interface clicklistener
     public interface OnClickListener{
-        void onClickListener(int subgrammer);
+        void onClickListener(int subgrammar);
     }
 }

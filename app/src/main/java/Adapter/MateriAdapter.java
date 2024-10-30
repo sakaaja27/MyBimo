@@ -1,6 +1,5 @@
-package carousel;
+package Adapter;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,50 +14,57 @@ import com.example.mybimo.R;
 
 import java.util.ArrayList;
 
+// Adapter untuk RecyclerView yang menampilkan daftar materi
 public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder> {
 
-    private ArrayList<Materi> materiArrayList;
-    private Context context;
-    private OnClickListener onClickListener;
+    private ArrayList<Materi> materiArrayList; // List untuk menyimpan data materi
+    private Context context; // Context aplikasi
+    private OnClickListener onClickListener; // Listener untuk menangani klik item
 
+    // Constructor pertama
     public MateriAdapter(Context context, ArrayList<Materi> materiArrayList) {
         this.context = context;
         this.materiArrayList = materiArrayList;
     }
 
+    // Constructor kedua dengan tambahan OnClickListener
     public MateriAdapter(ArrayList<Materi> materiArrayList, Context context, OnClickListener onClickListener) {
         this.materiArrayList = materiArrayList;
         this.context = context;
         this.onClickListener = onClickListener;
     }
 
+    // Membuat dan menginisialisasi ViewHolder baru
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_materi_merge, parent, false);
         return new ViewHolder(view);
     }
 
+    // Mengisi data ke dalam ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Materi materi = materiArrayList.get(position);
+        // Memuat gambar menggunakan Glide
         Glide.with(context).load(materi.getIcon()).into(holder.imageView);
-//        holder.itemView(materiArrayList.get(position),onClickListener);
-
         holder.textView.setText(materi.getNama());
+        holder.itemView(materiArrayList.get(position), onClickListener);
 
+        // Menambahkan listener klik pada item
         holder.itemView.setOnClickListener(v -> {
             if (onClickListener != null){
                 onClickListener.onClickListener(position);
             }
         });
-
     }
 
+    // Mengembalikan jumlah item dalam list
     @Override
     public int getItemCount() {
         return materiArrayList.size();
     }
 
+    // ViewHolder untuk menyimpan referensi ke views dalam setiap item
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
         public TextView textView;
@@ -67,23 +73,21 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
             super(itemView);
             imageView = itemView.findViewById(R.id.icon_image);
             textView = itemView.findViewById(R.id.text_view);
-
         }
-        // buat click listener materi di dashboard
 
-//        public void itemView(Materi materi, OnClickListener onClickListener) {
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    onClickListener.onClickListener(getAdapterPosition());
-//                }
-//            });
-//        }
+        // Metode untuk menambahkan listener klik pada item
+        public void itemView(Materi materi, OnClickListener onClickListener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickListener.onClickListener(getAdapterPosition());
+                }
+            });
+        }
     }
 
-        //interface clicklistener
+    // Interface untuk menangani klik pada item
     public interface OnClickListener{
-        void onClickListener(int materi);
+        void onClickListener(int position);
     }
-
 }

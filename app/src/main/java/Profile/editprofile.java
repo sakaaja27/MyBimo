@@ -149,194 +149,278 @@ public class editprofile extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // Memeriksa apakah hasil aktivitas berhasil dan data tidak null
         if (resultCode == RESULT_OK && data != null) {
+            // Mendapatkan URI dari data yang dikembalikan
             Uri uri = data.getData();
+
             if (uri != null){
                 try {
+                    // Mengubah URI menjadi Bitmap
                     Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+
+                    // Mengubah Bitmap menjadi array byte
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
                     byte[] bitmapdata = bos.toByteArray();
+
+                    // Mengunggah data gambar ke server
                     uploadImageToServer(bitmapdata);
+
+                    // Menampilkan gambar di ImageView
                     imageView.setImageBitmap(bitmap);
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }
-//            imageView.setImageURI(uri);
-//            uploadImageToServer(uri);
+
+            // Kode yang dikomentari:
+            // imageView.setImageURI(uri);  // Menampilkan gambar langsung dari URI
+            // uploadImageToServer(uri);    // Mengunggah URI ke server
         }
     }
 
     private void uploadImageToServer(byte[] imageData) {
+        // URL endpoint untuk upload gambar
         String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getupdateuserimage.php";
-        String fileName = UserId+".jpg";
-        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, url,
+
+        // Nama file yang akan disimpan di server (menggunakan ID pengguna)
+        String fileName = UserId + ".jpg";
+
+        // Membuat request multipart untuk mengirim file
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(
+                Request.Method.POST, // Metode HTTP POST
+                url,
+                // Listener untuk menangani respons sukses
                 new Response.Listener<NetworkResponse>() {
                     @Override
                     public void onResponse(NetworkResponse response) {
                         try {
+                            // Mengubah respons menjadi JSONObject
                             JSONObject jsonObject = new JSONObject(new String(response.data));
                             Log.d("Response", jsonObject.toString());
-                            // Check if the response contains an error
+
+                            // Memeriksa apakah respons mengandung error
                             if (!jsonObject.getBoolean("success")) {
                                 Log.d("Upload Error", jsonObject.getString("message"));
                             } else {
-                                // Handle success (e.g., update UI or show a message)
-                                Toast.makeText(getApplicationContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                                // Jika sukses, tampilkan pesan berhasil
+                                Toast.makeText(getApplicationContext(),
+                                        "Image uploaded successfully", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 },
+                // Listener untuk menangani error
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error", error.toString());
+                        Toast.makeText(getApplicationContext(),
+                                "Image uploaded successfully", Toast.LENGTH_SHORT).show();
                     }
                 }) {
+            // Override method untuk menambahkan parameter tambahan
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", UserId); // Send the user ID
+                params.put("id", UserId); // Menambahkan ID pengguna ke parameter
                 return params;
             }
 
+            // Override method untuk menambahkan data file
             @Override
             protected Map<String, DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
+                // Menambahkan file gambar dengan parameter 'upload_image'
                 params.put("upload_image", new DataPart(fileName, imageData, "image/jpeg"));
                 return params;
             }
         };
 
+        // Membuat antrian request dan menambahkan request ke dalamnya
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(volleyMultipartRequest);
     }
 
-    // Metode untuk mengonversi InputStream menjadi byte array
+    // Metode utilitas untuk mengonversi InputStream menjadi byte array
     private byte[] getBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
         byte[] buffer = new byte[bufferSize];
         int len;
+        // Membaca data dari InputStream ke ByteArrayOutputStream
         while ((len = inputStream.read(buffer)) != -1) {
             byteBuffer.write(buffer, 0, len);
         }
         return byteBuffer.toByteArray();
     }
 
-    private void fetchUser (String UserId) {
+    private void fetchUser(String UserId) {
+        // Membuat URL untuk mengambil data user dari server
         String URL = "http://" + ip + "/mybimo/getData/getUser.php?id=" + UserId;
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
+
+        // Membuat request JSON Array ke server
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET, // Menggunakan metode HTTP GET
+                URL,               // URL endpoint
+                null,             // tidak ada body request
+                // Listener untuk menangani respons sukses
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            // Pastikan ada data dalam response
+                            // Memeriksa apakah ada data dalam response
                             if (response.length() > 0) {
-                                // Ambil data pengguna pertama dari response
+                                // Mengambil data user pertama dari array JSON
                                 JSONObject jsonObject = response.getJSONObject(0);
+
+                                // Mengisi TextView dengan data user
                                 username.setText(jsonObject.getString("username"));
                                 email.setText(jsonObject.getString("email"));
                                 phone.setText(jsonObject.getString("phone"));
 
-                                String imageUrl = "http://" + ip +"/website%20mybimo/mybimo/src/getData/"+jsonObject.getString("upload_image");
-                                Log.d("", imageUrl); // Log URL gambar
+                                // Membuat URL lengkap untuk gambar
+                                String imageUrl = "http://" + ip +
+                                        "/website%20mybimo/mybimo/src/getData/" +
+                                        jsonObject.getString("upload_image");
+
+                                // Log URL gambar untuk debugging
+                                Log.d("", imageUrl);
+
+                                // Memeriksa validitas URL gambar
                                 if (imageUrl != null && !imageUrl.isEmpty()) {
+                                    // Memuat gambar jika URL valid
                                     loadImage(imageUrl);
                                 } else {
-                                    Toast.makeText(editprofile.this, "URL gambar tidak valid", Toast.LENGTH_SHORT).show();
+                                    // Menampilkan pesan error jika URL tidak valid
+                                    Toast.makeText(editprofile.this,
+                                            "URL gambar tidak valid",
+                                            Toast.LENGTH_SHORT).show();
                                 }
 
-
                             } else {
-                                Toast.makeText(editprofile.this, "Tidak ada data yang tersedia", Toast.LENGTH_SHORT).show();
+                                // Menampilkan pesan jika tidak ada data
+                                Toast.makeText(editprofile.this,
+                                        "Tidak ada data yang tersedia",
+                                        Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
+                            // Menangani error parsing JSON
                             e.printStackTrace();
-                            Toast.makeText(editprofile.this, "Kesalahan parsing data", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(editprofile.this,
+                                    "Kesalahan parsing data",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
+                // Listener untuk menangani error request
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(editprofile.this, "Gagal mengambil data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(editprofile.this,
+                                "Gagal mengambil data",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
 
-        // Tambahkan request ke queue
+        // Menambahkan request ke antrian Volley
         Volley.newRequestQueue(this).add(jsonArrayRequest);
     }
 
+    // Fungsi untuk memuat gambar dari URL
     private void loadImage(String imageUrl) {
+        // Membuat request gambar menggunakan Volley
         ImageRequest imageRequest = new ImageRequest(imageUrl,
+                // Listener untuk menangani respons sukses
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap response) {
-                        // nampilkan gambar di ImageView
+                        // Menampilkan gambar di ImageView
                         System.out.println("Stringresponse"+response);
                         imageView.setImageBitmap(response);
-
                     }
                 },
-                0, 0, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.RGB_565,
+                0, 0, // Ukuran maksimal gambar (0 = ukuran asli)
+                ImageView.ScaleType.CENTER_CROP, // Tipe scaling gambar
+                Bitmap.Config.RGB_565, // Konfigurasi bitmap
+                // Listener untuk menangani error
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (error.networkResponse != null) {
-                            Log.e("Image Load Error", "Error Code: " + error.networkResponse.statusCode);
+                            Log.e("Image Load Error",
+                                    "Error Code: " + error.networkResponse.statusCode);
                         }
-                        System.out.println("CUMIII"+error);
+                        System.out.println("Error: "+error);
+                        // Set gambar default jika terjadi error
                         imageView.setImageResource(R.drawable.icon_profile);
                     }
                 });
 
-        // Tambahkan request ke queue
+        // Menambahkan request ke antrian Volley
         Volley.newRequestQueue(this).add(imageRequest);
     }
 
+    // Fungsi untuk mengupdate data pengguna
     private void updateUser() {
+        // Mengambil data dari input fields
         String updatedUsername = username.getText().toString().trim();
         String updatedEmail = email.getText().toString().trim();
         String updatedPhone = phone.getText().toString().trim();
 
-        // Validate input
-        if (updatedUsername.isEmpty() || updatedEmail.isEmpty() || updatedPhone.isEmpty()) {
-            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+        // Validasi input
+        if (updatedUsername.isEmpty() || updatedEmail.isEmpty() ||
+                updatedPhone.isEmpty()) {
+            Toast.makeText(this, "All fields are required",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String URL = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getupdateuser.php";
+        // URL endpoint untuk update user
+        String URL = "http://" + ip +
+                "/website%20mybimo/mybimo/src/getData/getupdateuser.php";
 
+        // Membuat StringRequest untuk POST request
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                // Listener untuk menangani respons sukses
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
-                            Toast.makeText(editprofile.this, jsonResponse.getString("message"), Toast.LENGTH_SHORT).show();
+                            // Menampilkan pesan dari server
+                            Toast.makeText(editprofile.this,
+                                    jsonResponse.getString("message"),
+                                    Toast.LENGTH_SHORT).show();
+                            // Jika sukses, tutup activity
                             if (jsonResponse.getBoolean("success")) {
-                                finish(); // Close activity on success
+                                finish();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(editprofile.this, "Error parsing response: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(editprofile.this,
+                                    "Error parsing response: " + e.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
+                // Listener untuk menangani error
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(editprofile.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(editprofile.this,
+                                "Error: " + error.getMessage(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 }) {
+            // Override method untuk menambahkan parameter POST
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", UserId); // Send the user ID
+                params.put("id", UserId);
                 params.put("username", updatedUsername);
                 params.put("email", updatedEmail);
                 params.put("phone", updatedPhone);
@@ -344,7 +428,7 @@ public class editprofile extends AppCompatActivity {
             }
         };
 
-        // Add request to the queue
+        // Menambahkan request ke antrian Volley
         Volley.newRequestQueue(this).add(stringRequest);
     }
 

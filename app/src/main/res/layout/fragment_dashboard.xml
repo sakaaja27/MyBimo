@@ -2,138 +2,118 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="fragment.Dashboard">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/mybimo_bluefont" />
-
-    <TextView
-        android:id="@+id/auth_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:textSize="20sp"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/jersey_10"
-        android:textColor="#0B438C"
-        android:textFontWeight="400"
-        android:paddingHorizontal="40dp"
-        />
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- Header Section -->
+        <RelativeLayout
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <RelativeLayout
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/mybimo_bluefont" />
 
-                android:layout_width="match_parent"
-                android:layout_height="235dp"
-                android:layout_marginTop="70dp"
-                >
-                <ImageView
-                    android:id="@+id/bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/hello_dashboard"
-                    />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_profile"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/icon_profile"
+                android:background="@color/black"
+                app:strokeColor="#00EBC8"
+                app:strokeWidth="3dp"
+                app:shapeAppearanceOverlay="@style/circular"
+                />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_centerInParent="true"
+<!--            <TextView-->
+<!--                android:id="@+id/auth_name"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_marginTop="40dp"-->
+<!--                android:fontFamily="@font/jersey_10"-->
+<!--                android:paddingHorizontal="40dp"-->
+<!--                android:textColor="#0B438C"-->
+<!--                android:textFontWeight="400"-->
+<!--                android:textSize="20sp" />-->
 
-                    >
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/jersey_10"
-                        android:gravity="center"
-                        android:text="Hallo Champs"
-                        android:textSize="40sp"
-                        android:textColor="#0B438C"
-                        android:layout_marginBottom="0dp"
-                        android:layout_marginRight="30dp"
-                        android:shadowColor="#66001AFF"
-                        android:shadowDx="0"
-                        android:shadowDy="12"
-                        android:shadowRadius="5"
-                        />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/jersey_10"
-                        android:gravity="center"
-                        android:text="Ayo Belajar"
-                        android:textSize="40sp"
-                        android:textColor="#0B438C"
-                        android:layout_marginBottom="90dp"
-                        android:layout_marginRight="30dp"
-                        android:shadowColor="#66001AFF"
-                        android:shadowDx="0"
-                        android:shadowDy="12"
-                        android:shadowRadius="5"
-                        />
-
-                </LinearLayout>
-
-            </RelativeLayout>
+        </RelativeLayout>
 
 
-<!--            element card materi-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="Materi"
-                android:textSize="20sp"
-                android:fontFamily="sans-serif"
-                android:textFontWeight="700"
-                android:layout_marginTop="10dp"
-                android:paddingHorizontal="40dp"
-                android:textColor="@color/black" />
+        <!-- Carousel Section -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/carousel_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_marginTop="10dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:scrollbars="horizontal" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
+
+
+        <!-- Scrollable Content -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:scrollbars="vertical"
-                android:layout_marginTop="10dp" />
-<!--            <include layout="@layout/card_materi_merge"/>-->
-<!--            end-->
+                android:orientation="vertical">
+                <!-- Materi Section -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif"
+                    android:paddingHorizontal="40dp"
+                    android:text="Materi"
+                    android:textColor="@color/black"
+                    android:textFontWeight="700"
+                    android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="New Features"
-                android:textSize="20sp"
-                android:fontFamily="sans-serif"
-                android:textFontWeight="700"
-                android:paddingHorizontal="40dp"
-                android:textColor="@color/black"
-                />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:scrollbars="vertical" />
 
-            <ImageView
-                android:layout_width="336dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/general_quiz"
-                android:layout_gravity="center"
-                android:layout_height="95dp"
-                android:background="@drawable/rectangle"
-                />
-        </LinearLayout>
-    </ScrollView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:fontFamily="sans-serif"
+                    android:paddingHorizontal="40dp"
+                    android:text="New Features"
+                    android:textColor="@color/black"
+                    android:textFontWeight="700"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:layout_width="336dp"
+                    android:layout_height="95dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rectangle"
+                    android:src="@drawable/general_quiz" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </FrameLayout>

@@ -49,6 +49,7 @@ public class Login_view extends AppCompatActivity {
     private TextInputLayout passLayout;
     private TextInputEditText passEditText;
     private Preference preference;
+    private TextView forgot_pass;
     Button btn_login;
     TextView register;
 //    private  DBHelper DBHelper;
@@ -90,79 +91,56 @@ public class Login_view extends AppCompatActivity {
             }
         });
 //        API
-        // Menambahkan OnClickListener untuk tombol login
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Mengambil input email dan password dari EditText
                 String mail = emailEditText.getText().toString();
                 String password = passEditText.getText().toString();
 
-                // Memeriksa apakah email dan password tidak kosong
                 if (!(mail.isEmpty() || password.isEmpty())) {
-                    // Membuat antrian request Volley
                     RequestQueue requestQueue = Volley.newRequestQueue(Login_view.this);
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, DB_Contract.urlLogin, new Response.Listener<String>() {
+                        @Override
 
-                    // Membuat StringRequest untuk POST request
-                    StringRequest stringRequest = new StringRequest(
-                            Request.Method.POST,
-                            DB_Contract.urlLogin, // URL endpoint login
-                            // Response Listener - menangani response sukses
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    try {
-                                        // Parse response JSON
-                                        JSONObject jsonRespon = new JSONObject(response);
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonRespon = new JSONObject(response);
+                                if (jsonRespon.getString("status").equals("Login Berhasil")){
+                                    String id = jsonRespon.getString("id");
+                                    String username = jsonRespon.getString("username");
+                                    String email = jsonRespon.getString("email");
+                                    String phone = jsonRespon.getString("phone");
+                                    String role = jsonRespon.getString("role");
+                                    String uploadImage = jsonRespon.getString("upload_image");
+                                    String password = jsonRespon.getString("password");
 
-                                        // Cek status login
-                                        if (jsonRespon.getString("status").equals("Login Berhasil")){
-                                            // Mengambil data user dari response
-                                            String id = jsonRespon.getString("id");
-                                            String username = jsonRespon.getString("username");
-                                            String email = jsonRespon.getString("email");
-                                            String phone = jsonRespon.getString("phone");
-                                            String role = jsonRespon.getString("role");
-                                            String uploadImage = jsonRespon.getString("upload_image");
-                                            String password = jsonRespon.getString("password");
 
-                                            // Menampilkan pesan sukses
-                                            Toast.makeText(getApplicationContext(), "Login Berhasil", Toast.LENGTH_SHORT).show();
-
-                                            // Membuat intent ke Main Activity
-                                            Intent intent = new Intent(getApplicationContext(), Main.class);
-                                            // Menambahkan data user ke intent
-                                            intent.putExtra("id", id);
-                                            intent.putExtra("username", username);
-                                            intent.putExtra("email", email);
-                                            intent.putExtra("phone", phone);
-                                            intent.putExtra("role", role);
-                                            intent.putExtra("upload_image", uploadImage);
-                                            intent.putExtra("password", password);
-                                            // Memulai Main Activity
-                                            startActivity(intent);
-                                        } else {
-                                            // Menampilkan pesan gagal login
-                                            Toast.makeText(getApplicationContext(), "Login Gagal", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } catch (JSONException e) {
-                                        // Menangani error parsing JSON
-                                        Log.e("Volley Error", e.toString());
-                                        e.printStackTrace();
-                                    }
+                                    Toast.makeText(getApplicationContext(),"Login Berhasil",Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), Main.class);
+                                    intent.putExtra("id", id);
+                                    intent.putExtra("username", username);
+                                    intent.putExtra("email", email);
+                                    intent.putExtra("phone", phone);
+                                    intent.putExtra("role", role);
+                                    intent.putExtra("upload_image", uploadImage);
+                                    intent.putExtra("password", password);
+                                    startActivity(intent);
+                                }else {
+                                    Toast.makeText(getApplicationContext(),"Login Gagal",Toast.LENGTH_SHORT).show();
                                 }
-                            },
-                            // Error Listener - menangani error request
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    System.out.println(error);
-                                    Log.e("Volley Error", error.toString());
-                                    Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                                }
+                            }catch (JSONException e){
+                                Log.e("Volley Error", e.toString());
+                                e.printStackTrace();
                             }
-                    ){
-                        // Override getParams untuk menambahkan parameter POST
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println(error);
+                            Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_SHORT).show();
+                        }
+                    }){
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> params = new HashMap<>();
@@ -171,12 +149,20 @@ public class Login_view extends AppCompatActivity {
                             return params;
                         }
                     };
-                    // Menambahkan request ke antrian
                     requestQueue.add(stringRequest);
                 } else {
-                    // Menampilkan pesan jika field kosong
                     Toast.makeText(getApplicationContext(), "Field Kosong", Toast.LENGTH_SHORT).show();
                 }
+
+            }
+        });
+
+        forgot_pass = findViewById(R.id.forgot_pass);
+        forgot_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login_view.this, ForgotPass.class);
+                startActivity(intent);
             }
         });
 
@@ -185,3 +171,31 @@ public class Login_view extends AppCompatActivity {
 
     }
 }
+
+//        btn_login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String y_email = email.getText().toString();
+//                String password = pass.getText().toString();
+//                // jika ada field yang kosong maka akan muncul toast
+//                if (y_email.isEmpty() || password.isEmpty()) {
+//                    Toast.makeText(Login_view.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+////                    jika tidak, maka akan mengecek apakah email dan password sudah terdaftar atau belum
+//                    SQLiteDatabase db = DBHelper.getReadableDatabase();
+//                    Cursor cursor = db.query("users", new String[]{"id", "email", "password"}, "email=? AND password=?", new String[]{y_email, password}, null, null, null);
+////                    jika email dan password sudah terdaftar maka akan muncul toast dan mengarah ke halaman dashboard
+//                    if (cursor.getCount() > 0) {
+//                        Toast.makeText(Login_view.this, "Login successful", Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(Login_view.this, Main.class);
+//                        startActivity(intent);
+//                        finish();
+//                    }
+////                    jika tidak, maka akan muncul toast
+//                    else {
+//                        Toast.makeText(Login_view.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//        });

@@ -1,6 +1,6 @@
 package Adapter;
 
-public class DataPart {
+public class  DataPart {
     private String fileName;
     private byte[] content;
     private String mimeType;

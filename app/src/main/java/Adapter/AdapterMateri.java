@@ -49,11 +49,11 @@ public class AdapterMateri extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView sub_materi = itemView.findViewById(R.id.sub_materi);
-        GetMateri getMateri = getMateriList.get(position);
-
-
-        sub_materi.setText("PDF " + getMateri.getId());
+//        TextView sub_materi = itemView.findViewById(R.id.sub_materi);
+//        GetMateri getMateri = getMateriList.get(position);
+//
+//
+//        sub_materi.setText("PDF " + getMateri.getId());
 
 
         return itemView;

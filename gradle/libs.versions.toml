@@ -35,6 +35,7 @@ glide = { group = "com.github.bumptech.glide", name = "glide", version = "4.16.0
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 imagepicker = { group = "com.github.dhaval2404", name = "imagepicker", version.ref = "imagepicker" }
 androidpdf = { group = "com.github.mhiew",name="android-pdf-viewer",version.ref = "androidpdf"}
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 

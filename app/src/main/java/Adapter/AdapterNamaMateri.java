@@ -39,8 +39,8 @@ public class AdapterNamaMateri extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView judulMateri = itemView.findViewById(R.id.sub_materi);
-        GetNamaMateri getNamaMateri = getListMateri.get(position);
+//        TextView judulMateri = itemView.findViewById(R.id.sub_materi);
+//        GetNamaMateri getNamaMateri = getListMateri.get(position);
 
 
 

@@ -90,9 +90,9 @@ public class Register_view extends AppCompatActivity {
                 // Validasi input
                 if (user.isEmpty() || mail.isEmpty() || phone.isEmpty() || password.isEmpty()) {
                     Toast.makeText(Register_view.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (phone.length() < 12) {
-                    Toast.makeText(Register_view.this, "Phone number must be at least 12 number", Toast.LENGTH_SHORT).show();
+//                }
+//                else if (phone.length() < 12) {
+//                    Toast.makeText(Register_view.this, "Phone number must be at least 12 number", Toast.LENGTH_SHORT).show();
                 }
                 else if (password.length() < 8) {
                     Toast.makeText(Register_view.this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();

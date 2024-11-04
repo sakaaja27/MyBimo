@@ -9,6 +9,7 @@ import android.view.Display;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mybimo.R;
+import com.github.barteksc.pdfviewer.PDFView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,12 +40,12 @@ import Adapter.GetMateri;
 
 public class Idiom extends AppCompatActivity {
     public static final String URL = "http://" + ip + "/mybimo/getData/submateri.php";
-
+    private ImageView arrow;
     private TextView nama_sub;
     private View view; // Deklarasi variabel view
     private String pdfData;
     private AdapterMateri adapterMateri;
-    private WebView webView;
+    private PDFView pdfView;
 
 
     List<GetMateri> materiArrayList = new ArrayList<>();
@@ -58,7 +60,7 @@ public class Idiom extends AppCompatActivity {
         setContentView(R.layout.activity_idiom);
 
         nama_sub= findViewById(R.id.nama_sub);
-        webView = findViewById(R.id.pdfView);
+        pdfView = findViewById(R.id.pdfView);
         // Fetch data
         fetchIdiom();
     }
@@ -82,12 +84,10 @@ public class Idiom extends AppCompatActivity {
                                 if (nama_sub != null ) {
                                     nama_sub.setText(materi.getNamaSub());
                                     String pdfData = materi.getPdfData();
-                                    webView = findViewById(R.id.pdfView);
-                                    // Mengatur WebView
-                                    WebSettings webSettings = webView.getSettings();
-                                    webSettings.setJavaScriptEnabled(true);
-                                    String Url ="https://docs.google.com/gview?embedded=true&url=" + "file://" + pdfData;
-                                    webView.loadUrl(Url);
+                                    pdfView = findViewById(R.id.pdfView);
+                                    pdfView.fromUri(Uri.parse(pdfData))
+                                            .load();
+
 
 
                                 } else {
@@ -116,5 +116,6 @@ public class Idiom extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
 
     }
+
 
 }

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/arrow_back"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_back"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="318dp"
+            android:background="@drawable/icon_vocab"
+            android:translationZ="-10dp" />
+
+        <ImageView
+            android:id="@+id/rounded_login"
+            android:layout_marginTop="250dp"
+            android:layout_width="match_parent"
+            android:layout_height="700dp"
+            android:src="@drawable/rounded_border_login"
+            android:translationZ="-10dp" />
+
+        <TextView
+            android:id="@+id/materi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:layout_marginTop="260dp"
+            android:text="Vocabullary"
+            android:translationZ="-10dp" />
+
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/materi">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="100dp"
+                    android:foregroundGravity="center"
+                    android:scrollbars="vertical" />
+
+                <TextView
+                    android:id="@+id/text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:fontFamily="sans-serif"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textFontWeight="600"
+                    android:layout_marginTop="5dp" />
+
+
+            </LinearLayout>
+        </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bank_soal"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="300dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/rounded_sub"
+                android:drawablePadding="30dp"
+                android:paddingStart="70dp"
+                android:text="Bank Soal"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                style="@android:style/Widget.Button"
+                android:textAlignment="viewStart"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

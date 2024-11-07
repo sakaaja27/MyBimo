@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mybimo.R;
@@ -46,13 +45,13 @@ public class AdapterUser extends BaseAdapter {
         if (convertView == null) convertView = inflater.inflate(R.layout.fragment_dashboard, null);
 
         TextView username = convertView.findViewById(R.id.auth_name);
-//        ImageView fotoIcon = convertView.findViewById(R.id.foto_icon);
 //        TextView email = convertView.findViewById(R.id.harga);
 //        TextView phone = convertView.findViewById(R.id.nomor_bank);
 //        TextView password = convertView.findViewById(R.id.password);
         GetUser user = getUserList.get(position);
         username.setText(user.getUsername());
-
+//        harga.setText(user.getHarga());
+//        nomor_bank.setText(user.getNomor_bank());
 
         return convertView;
     }

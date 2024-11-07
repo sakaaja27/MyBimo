@@ -45,7 +45,6 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.google.material)
     implementation(libs.volley)
-    implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation(libs.imagepicker)
     implementation(libs.androidpdf)
     testImplementation(libs.junit)

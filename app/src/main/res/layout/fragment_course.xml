@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_white"
+    android:background="@drawable/bg_blue"
     tools:context="fragment.Course">
 
     <!-- TODO: Update blank fragment layout -->
@@ -43,25 +43,125 @@
 
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
+        android:gravity="top|center"
         >
 
-       <ImageView
-           android:layout_width="300dp"
-           android:layout_height="300dp"
-           android:src="@drawable/mentainence"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Maintenance"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif"
-            android:textFontWeight="600"
-            android:layout_marginTop="20dp"/>
+        <RelativeLayout
+            android:layout_width="320dp"
+            android:layout_height="100dp"
+            >
+            <ImageView
+                android:id="@+id/border_bulanan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded"
+                />
+
+            <TextView
+                android:layout_width="106dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="25dp"
+                android:fontFamily="sans-serif"
+                android:text="27 January 2024"
+                android:textColor="@color/black"
+                android:textFontWeight="400"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Materi Listening"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="700"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_margin="20dp"
+            android:layout_width="320dp"
+            android:layout_height="100dp"
+            >
+            <ImageView
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded"
+                />
+
+            <TextView
+                android:layout_width="106dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="25dp"
+                android:fontFamily="sans-serif"
+                android:text="27 January 2024"
+                android:textColor="@color/black"
+                android:textFontWeight="400"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Materi Pronount"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="700"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_margin="20dp"
+            android:layout_width="320dp"
+            android:layout_height="100dp"
+            >
+            <ImageView
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded"
+                />
+
+            <TextView
+                android:layout_width="106dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="25dp"
+                android:fontFamily="sans-serif"
+                android:text="27 January 2024"
+                android:textColor="@color/black"
+                android:textFontWeight="400"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Materi Vocabulary"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="700"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+
+
+
     </LinearLayout>
 
 </FrameLayout>

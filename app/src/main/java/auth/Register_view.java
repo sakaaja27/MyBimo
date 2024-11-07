@@ -78,17 +78,16 @@ public class Register_view extends AppCompatActivity {
         });
 
 //        API
-        signup.setOnClickListener(new View.OnClickListener() {
+        signup.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View v) {
-                // Mengambil input dari EditText
                 String user = userlEditText.getText().toString();
                 String mail = emailEditText.getText().toString();
                 String phone = phoneEditText.getText().toString();
                 String password = passEditText.getText().toString();
 
-                // Validasi input
-                if (user.isEmpty() || mail.isEmpty() || phone.isEmpty() || password.isEmpty()) {
+                if (user.isEmpty() || mail.isEmpty() || phone.isEmpty() || password.isEmpty()){
                     Toast.makeText(Register_view.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 }
                 else if (phone.length() < 12) {
@@ -96,45 +95,33 @@ public class Register_view extends AppCompatActivity {
                 }
                 else if (password.length() < 8) {
                     Toast.makeText(Register_view.this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    // Membuat StringRequest untuk POST request
-                    StringRequest stringRequest = new StringRequest(
-                            Request.Method.POST,
-                            DB_Contract.urlRegister, // URL endpoint register
-                            // Response Listener - menangani response sukses
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    System.out.println(response);
-                                    Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
-                                    // Pindah ke halaman Login setelah registrasi berhasil
-                                    startActivity(new Intent(getApplicationContext(), Login_view.class));
-                                }
-                            },
-                            // Error Listener - menangani error request
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    System.out.println(error.toString());
-                                    Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                    ) {
-                        // Override getParams untuk menambahkan parameter POST
+                }  else {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, DB_Contract.urlRegister, new Response.Listener<String>() {
                         @Override
-                        protected HashMap<String, String> getParams() throws AuthFailureError {
+                        public void onResponse(String response) {
+                            System.out.println(response);
+                            Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), Login_view.class));
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println(error.toString());
+                            Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_SHORT).show();
+                        }
+                    }){
+                        @Override
+                        protected HashMap<String, String>getParams() throws AuthFailureError{
                             HashMap<String, String> params = new HashMap<>();
                             params.put("username", user);
                             params.put("email", mail);
                             params.put("phone", phone);
-                            params.put("role", "0"); // Set default role ke 0
+                            params.put("role", "0");
                             params.put("password", password);
+                            // Add this line to set default role to 0
                             return params;
                         }
                     };
-
-                    // Membuat RequestQueue dan menambahkan request
                     RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                     requestQueue.add(stringRequest);
                 }

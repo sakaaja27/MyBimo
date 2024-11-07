@@ -182,7 +182,6 @@ public class Profile extends Fragment {
                                     email.setText(user.getEmail());
 
                                     String imageUrl = "http://" + ip +"/website%20mybimo/mybimo/src/getData/"+user.getUploadImage();
-                                    System.out.println("IMAGE"+imageUrl);
                                     Log.d("", imageUrl); // Log URL gambar
                                     if (imageUrl != null && !imageUrl.isEmpty()) {
                                         loadImage(imageUrl);

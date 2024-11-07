@@ -1,4 +1,4 @@
-package Adapter;
+package carousel;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,18 +9,19 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.mybimo.R;
 
 import java.util.ArrayList;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
     Context context;
-    ArrayList<Integer> imageResources;
+    ArrayList<String> arrayList;
     OnItemClickListener onItemClickListener;
 
-    public ImageAdapter(Context context, ArrayList<Integer> imageResources) {
+    public ImageAdapter(Context context, ArrayList<String> arrayList) {
         this.context = context;
-        this.imageResources = imageResources;
+        this.arrayList = arrayList;
     }
 
     @NonNull
@@ -32,13 +33,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageView.setImageResource(imageResources.get(position));
-        holder.itemView.setOnClickListener(view -> onItemClickListener.onClick(holder.imageView, String.valueOf(imageResources.get(position))));
+        Glide.with(context).load(arrayList.get(position)).into(holder.imageView);
+        holder.itemView.setOnClickListener(view -> onItemClickListener.onClick(holder.imageView, arrayList.get(position)));
     }
 
     @Override
     public int getItemCount() {
-        return imageResources.size(); // Ubah menjadi imageResources.size()
+        return arrayList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

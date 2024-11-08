@@ -18,7 +18,7 @@
         android:id="@+id/icon_grammar"
         android:layout_width="match_parent"
         android:layout_height="308dp"
-        android:background="@drawable/icon_grammer"
+        android:scaleType="centerCrop"
         android:translationZ="-10dp" />
 
     <ImageView
@@ -37,7 +37,7 @@
         android:layout_below="@id/icon_grammar"
         android:layout_marginTop="-48dp"
         android:gravity="center"
-        android:text="Grammarly Materials"
+        android:text=""
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold" />

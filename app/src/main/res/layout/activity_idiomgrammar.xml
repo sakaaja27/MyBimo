@@ -20,7 +20,7 @@
             android:src="@drawable/arrow_back"/>
 
         <TextView
-            android:id="@+id/grammary"
+            android:id="@+id/name_sub"
             android:layout_marginTop="30dp"
             android:layout_marginStart="10dp"
             android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:fontFamily="sans-serif"
             android:textSize="18sp"
             android:textFontWeight="800"
-            android:text="Grammarly Materials"/>
+            android:text=""/>
     </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"

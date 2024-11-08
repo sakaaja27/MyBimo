@@ -58,6 +58,7 @@ public class Dashboard extends Fragment{
     private RecyclerView recyclerView;
     private ImageView imageView;
     private MateriAdapter materiAdapter;
+
     private TextView auth_name;
     private View view;
     private ShapeableImageView image_profil;
@@ -101,6 +102,7 @@ public class Dashboard extends Fragment{
 
         carouselRecyclerView = view.findViewById(R.id.carousel_recycler_view); // Tambahkan ini
         recyclerView = view.findViewById(R.id.recycler_view);
+
         auth_name = view.findViewById(R.id.auth_name);
         materiArrayList = new ArrayList<>();
         image_profil = view.findViewById(R.id.image_profile);
@@ -234,12 +236,12 @@ public class Dashboard extends Fragment{
 
 //User
 // Metode untuk mengambil data user dari server berdasarkan UserId
-    private void fetchUser(String UserId) {
-        // Membuat URL untuk request dengan menambahkan UserId sebagai parameter
-        String URL = "http://" + ip + "/mybimo/getData/getUser.php?id=" + UserId;
+private void fetchUser (String UserId) {
+    // Membuat URL untuk request dengan menambahkan UserId sebagai parameter
+    String URL = "http://" + ip + "/mybimo/getData/getUser.php?id=" + UserId;
 
-        // Membuat request JSON Array menggunakan Volley
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+    // Membuat request JSON Array menggunakan Volley
+    JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
             Request.Method.GET, // Metode HTTP GET
             URL,               // URL endpoint
             null,             // tidak ada body request
@@ -252,8 +254,8 @@ public class Dashboard extends Fragment{
                             // Mengambil objek pertama dari array JSON
                             JSONObject jsonObject = response.getJSONObject(0);
 
-                            // Membuat objek GetUser dari data JSON
-                            GetUser user = new GetUser(
+                            // Membuat objek GetUser  dari data JSON
+                            GetUser  user = new GetUser (
                                     jsonObject.getString("id"),
                                     jsonObject.getString("username"),
                                     jsonObject.getString("email"),
@@ -264,14 +266,10 @@ public class Dashboard extends Fragment{
 
                             // Memeriksa apakah view sudah diinisialisasi
                             if (view != null) {
-                                String imageUrl = "http://" + ip +"/website%20mybimo/mybimo/src/getData/"+user.getUploadImage();
-                                System.out.println("IMAGE"+imageUrl);
-                                Log.d("", imageUrl); // Log URL gambar
-                                if (imageUrl != null && !imageUrl.isEmpty()) {
-                                    loadImage(imageUrl);
-                                } else {
-                                    Toast.makeText(getContext(), "URL gambar tidak valid", Toast.LENGTH_SHORT).show();
-                                }
+                                String imageUrl = "http://" + ip + "/website%20mybimo/mybimo/src/getData/" + user.getUploadImage();
+                                System.out.println("IMAGE: " + imageUrl);
+                                Log.d("Image URL", imageUrl); // Log URL gambar
+                                loadImage(imageUrl); // Panggil metode loadImage untuk menampilkan gambar
                             }
                         } else {
                             // Menampilkan pesan jika tidak ada data
@@ -299,9 +297,10 @@ public class Dashboard extends Fragment{
                 }
             });
 
-        // Menambahkan request ke Volley Request Queue
-        Volley.newRequestQueue(requireContext()).add(jsonArrayRequest);
-    }
+    // Menambahkan request ke Volley Request Queue
+    Volley.newRequestQueue(requireContext()).add(jsonArrayRequest);
+}
+
     private void loadImage(String imageUrl) {
         if (getContext() == null) {
             Log.e("Dashboard", "Context is null");
@@ -311,12 +310,12 @@ public class Dashboard extends Fragment{
         try {
             Glide.with(requireContext())
                     .load(imageUrl)
-                    .placeholder(R.drawable.icon_profile)
-                    .error(R.drawable.icon_profile)
+                    .placeholder(R.drawable.icon_profile) // Gambar placeholder saat loading
+                    .error(R.drawable.icon_profile) // Gambar yang ditampilkan jika terjadi error
                     .into(image_profil);
         } catch (Exception e) {
             Log.e("Dashboard", "Error loading image: " + e.getMessage());
-            image_profil.setImageResource(R.drawable.icon_profile);
+            image_profil.setImageResource(R.drawable.icon_profile); // Set gambar default jika error
         }
     }
 

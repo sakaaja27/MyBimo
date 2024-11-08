@@ -116,7 +116,7 @@ public class Register_view extends AppCompatActivity {
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    System.out.println(error.toString());
+                                    System.out.println("why"+error.toString());
                                     Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
                                 }
                             }

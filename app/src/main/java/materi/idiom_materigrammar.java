@@ -9,17 +9,28 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.mybimo.R;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -28,11 +39,16 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import Adapter.MateriSub;
 
 public class idiom_materigrammar extends AppCompatActivity {
 
     PDFView pdfView;
     CircularProgressIndicator progressBar;
+    private TextView submateriname;
     ImageView arrow;
 
     @Override
@@ -42,6 +58,7 @@ public class idiom_materigrammar extends AppCompatActivity {
 
         pdfView = findViewById(R.id.pdfView);
         arrow = findViewById(R.id.arrow_back);
+        submateriname = findViewById(R.id.name_sub);
         progressBar = findViewById(R.id.progress_circular);
 
         //  progress bar terlihat di awal
@@ -55,6 +72,7 @@ public class idiom_materigrammar extends AppCompatActivity {
             }
         });
 
+        submateriname.setText(getIntent().getStringExtra("nama_sub"));
         String url = getIntent().getStringExtra("upload_file");
         String uploadFile = "http://" + ip + "/website%20mybimo/mybimo/src/getData/" + url;
         System.out.println("TET" + uploadFile);
@@ -65,6 +83,10 @@ public class idiom_materigrammar extends AppCompatActivity {
             Toast.makeText(this, "File tidak ditemukan", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
+
 
     class RetrievePDFFromUrl extends AsyncTask<String, Void, InputStream> {
         @Override

@@ -83,6 +83,7 @@ public class Dashboard extends Fragment{
         view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
+
         auth_name = view.findViewById(R.id.auth_name);
 //        materiArrayList = new ArrayList<>();
 

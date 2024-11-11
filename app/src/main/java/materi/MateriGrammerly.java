@@ -2,12 +2,20 @@ package materi;
 
 import static android.app.PendingIntent.getActivity;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+import static java.security.AccessController.getContext;
 import static auth.DB_Contract.ip;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,9 +27,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.mybimo.R;
 
 import org.json.JSONArray;
@@ -40,7 +50,10 @@ public class MateriGrammerly extends AppCompatActivity {
     private AdapterSubGrammer materisub;
     private AppCompatButton btn_soal;
     private RecyclerView recyclerView;
+    private TextView materi;
+    private ImageView icon_submateri;
     private ArrayList<MateriSub> materiSubArrayList;
+    private ImageView rounded;
     private ImageView arrow;
 
     @Override
@@ -49,8 +62,12 @@ public class MateriGrammerly extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_materi_grammerly);
         recyclerView = findViewById(R.id.recycler_view);
+        materi = findViewById(R.id.materi);
+        icon_submateri = findViewById(R.id.icon_grammar);
         materiSubArrayList = new ArrayList<>();
         arrow = findViewById(R.id.arrow_back);
+        rounded = findViewById(R.id.rounded_login);
+
 
         arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,21 +94,53 @@ public class MateriGrammerly extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         try {
                             // Mengubah respons string menjadi JSONArray
                             JSONArray jsonArray = new JSONArray(response);
 
+                            if (jsonArray.length() == 0) {
+                                // Menampilkan pesan jika tidak ada data
+                                icon_submateri.setImageResource(R.drawable.comingsoon);
+                                rounded.setVisibility(View.INVISIBLE);
+
+                                // Mengatur scaleType agar gambar ditampilkan dengan proporsional
+                                icon_submateri.setScaleType(ImageView.ScaleType.FIT_CENTER); // Atau bisa menggunakan CENTER_INSIDE
+
+                                // Mengatur posisi icon_submateri ke tengah
+                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                        RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+                                // Mengatur icon_submateri agar berada di tengah RelativeLayout
+                                params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                                icon_submateri.setLayoutParams(params); // Menerapkan LayoutParams ke icon_submateri
+                                Toast.makeText(MateriGrammerly.this, "COMING SOON", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             // Iterasi melalui setiap objek dalam JSONArray
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                                 // Mengekstrak data dari setiap objek JSON
                                 String id = jsonObject.getString("id");
+                                String judul_materi = jsonObject.getString("judul_materi");
                                 String nama = jsonObject.getString("nama_sub");
                                 String upload_file = jsonObject.getString("upload_file");
+                                String fotoIcon = jsonObject.getString("foto_icon");
 
                                 // Menambahkan data ke ArrayList
-                                materiSubArrayList.add(new MateriSub(id, nama, upload_file));
+                                materiSubArrayList.add(new MateriSub(id,judul_materi, nama,fotoIcon, upload_file));
+
+                                materi.setText(judul_materi);
+                                String imageUrl = "http://" + ip +"/website%20mybimo/mybimo/src/getData/"+fotoIcon;
+                                System.out.println("IMAGEICON"+imageUrl);
+                                Log.d("", imageUrl); // Log URL gambar
+                                if (imageUrl != null && !imageUrl.isEmpty()) {
+                                    loadImage(imageUrl);
+                                } else {
+                                    Toast.makeText(MateriGrammerly.this, "URL gambar tidak valid", Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             // Memanggil method untuk setup RecyclerView setelah data diambil
@@ -122,6 +171,34 @@ public class MateriGrammerly extends AppCompatActivity {
         Volley.newRequestQueue(MateriGrammerly.this).add(stringRequest);
     }
 
+    private void loadImage(String imageUrl) {
+        ImageRequest imageRequest = new ImageRequest(imageUrl,
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        // nampilkan gambar di ImageView
+                        System.out.println("Stringresponse"+response);
+                        icon_submateri.setImageBitmap(response);
+
+
+                    }
+                },
+                0, 0, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.RGB_565,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse != null) {
+                            Log.e("Image Load Error", "Error Code: " + error.networkResponse.statusCode);
+                        }
+//                        tampilkan gambar drawable default
+                        icon_submateri.setImageResource(R.drawable.icon_listening);
+                    }
+                });
+
+        // Tambahkan request ke queue
+        Volley.newRequestQueue(MateriGrammerly.this).add(imageRequest);
+    }
+
     private void setupRecyclerView() {
         // Inisialisasi adapter dengan context dan data
         materisub = new AdapterSubGrammer(MateriGrammerly.this, materiSubArrayList);
@@ -137,6 +214,7 @@ public class MateriGrammerly extends AppCompatActivity {
                 Intent intent = new Intent(MateriGrammerly.this, idiom_materigrammar.class);
 
                 // Menambahkan data tambahan (upload_file) ke intent
+                intent.putExtra("nama_sub",selectedMateri.getNama());
                 intent.putExtra("upload_file", selectedMateri.getUpload_file());
 
                 // Memulai aktivitas baru

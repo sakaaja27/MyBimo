@@ -49,6 +49,7 @@ public class Login_view extends AppCompatActivity {
     private TextInputLayout passLayout;
     private TextInputEditText passEditText;
     private Preference preference;
+    private TextView forgot_pass;
     Button btn_login;
     TextView register;
 //    private  DBHelper DBHelper;
@@ -65,6 +66,15 @@ public class Login_view extends AppCompatActivity {
         passEditText = (TextInputEditText) passLayout.getEditText();
         register = findViewById(R.id.register);
         btn_login = findViewById(R.id.btn_login);
+
+        forgot_pass = findViewById(R.id.forgot_pass);
+        forgot_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login_view.this, ForgotPassword.class);
+                startActivity(intent);
+            }
+        });
 
 //        preference = new Preference(this);
 //        preference.checkLogin();

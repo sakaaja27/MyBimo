@@ -169,14 +169,14 @@ public class Dashboard extends Fragment{
     }
 
     //materi
-    // Metode untuk mengambil data materi dari server
     private void fetchMateriData() {
         // URL untuk mengambil data materi
         String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getmateriawal.php";
+        String urlTransaksi = "http://" + ip + "/website%20mybimo/mybimo/src/getData/transaksi.php";
         // URL dasar untuk gambar
         String imageUrl = "http://" + ip +"/website%20mybimo/mybimo/src/getData/";
 
-        // Membuat request JSON Array
+        // Membuat request JSON Array untuk materi
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -189,8 +189,9 @@ public class Dashboard extends Fragment{
                                 String id = jsonObject.getString("id");
                                 String fotoIcon = imageUrl + jsonObject.getString("foto_icon");
                                 String nama = jsonObject.getString("judul_materi");
+
                                 // Menambahkan data ke ArrayList
-                                materiArrayList.add(new Materi(id,fotoIcon, nama));
+                                materiArrayList.add(new Materi(id, fotoIcon, nama));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -203,7 +204,7 @@ public class Dashboard extends Fragment{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Menampilkan pesan error jika terjadi kesalahan
-                        Toast.makeText(getActivity(), "ERROR MATERI" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "ERROR MATERI: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -215,16 +216,11 @@ public class Dashboard extends Fragment{
     private void setupRecyclerView() {
         // Inisialisasi adapter
         materiAdapter = new MateriAdapter(getActivity(), materiArrayList);
-        // Inisialisasi ulang adapter dengan menambahkan listener
         materiAdapter = new MateriAdapter(materiArrayList, getActivity(), new MateriAdapter.OnClickListener() {
             @Override
             public void onClickListener(int position) {
-                // Menangani klik pada item berdasarkan posisi
                 Materi selectedMateri = materiArrayList.get(position);
-                Intent intent = new Intent(getActivity(), MateriGrammerly.class);
-//                kirim id
-                intent.putExtra("id",selectedMateri.getId());
-                startActivity(intent);
+                checkUserTransaction(selectedMateri.getId());
             }
         });
 
@@ -232,6 +228,48 @@ public class Dashboard extends Fragment{
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         // Menetapkan adapter ke RecyclerView
         recyclerView.setAdapter(materiAdapter);
+    }
+
+    // Metode untuk memeriksa status transaksi pengguna
+    private void checkUserTransaction(String materiId) {
+        String urlTransaksi = "http://" + ip + "/website%20mybimo/mybimo/src/getData/gettransaksi.php?id_user=" + UserId; // Ganti userId dengan ID pengguna yang sesuai
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlTransaksi, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            if (response.length() > 0) {
+                                JSONObject transaksi = response.getJSONObject(0);
+                                int status = transaksi.getInt("status"); // Mengambil status transaksi
+
+                                if (status == 1) {
+                                    // Arahkan ke aktivitas jika status = 1
+                                    Intent intent = new Intent(getActivity(), MateriGrammerly.class);
+                                    intent.putExtra("id", materiId);
+                                    startActivity(intent);
+                                } else {
+                                    // Tampilkan toast jika status = 0
+                                    Toast.makeText(getActivity(), "Silahkan langganan dulu", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                // Tampilkan toast jika tidak ada data transaksi
+                                Toast.makeText(getActivity(), "Silahkan langganan dulu", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), "ERROR TRANSAKSI: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // Menambahkan request ke antrian Volley
+        Volley.newRequestQueue(getActivity()).add(jsonArrayRequest);
     }
 
 //User

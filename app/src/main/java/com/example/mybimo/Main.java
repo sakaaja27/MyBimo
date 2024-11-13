@@ -31,6 +31,7 @@ public class Main extends AppCompatActivity implements NavigationBarView.OnItemS
     public static String RequestRole;
     public static String RequestPassword;
     public static String uploadImage;
+    private int currentSelectedItem = -1;
     private Preference preference;
 
     @Override
@@ -47,6 +48,11 @@ public class Main extends AppCompatActivity implements NavigationBarView.OnItemS
         // Inisialisasi dan setup Bottom Navigation
         BottomNavigationView navigationView = findViewById(R.id.navigation);
         navigationView.setOnItemSelectedListener(this);
+        // Memuat fragment default saat activity dibuat
+        if (savedInstanceState == null) {
+            currentSelectedItem = R.id.fr_home; // Misalnya, fragment default adalah Dashboard
+            loadFragment(new Dashboard());
+        }
         // Mengatur item home sebagai item yang terpilih
         navigationView.setSelectedItemId(R.id.fr_home);
 
@@ -79,6 +85,11 @@ public class Main extends AppCompatActivity implements NavigationBarView.OnItemS
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Mendapatkan id item yang dipilih
         int selected = item.getItemId();
+
+        // Cek apakah item yang dipilih sama dengan item yang saat ini dipilih
+        if (selected == currentSelectedItem) {
+            return false; // Tidak melakukan apa-apa jika item yang sama dipilih
+        }
         Fragment fragment = null;
 
         // Memilih fragment berdasarkan item yang dipilih
@@ -90,6 +101,11 @@ public class Main extends AppCompatActivity implements NavigationBarView.OnItemS
             fragment = new Course();
         } else {
             fragment = new Profile();
+        }
+
+        // Memuat fragment yang dipilih
+        if (loadFragment(fragment)) {
+            currentSelectedItem = selected; // Update item yang saat ini dipilih
         }
 
         // Memuat fragment yang dipilih

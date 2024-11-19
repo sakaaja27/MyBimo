@@ -13,9 +13,9 @@
         />
 
     <item
-        android:id="@+id/fr_course"
+        android:id="@+id/fr_notif"
         android:icon="@drawable/course"
-        android:title="My Course"
+        android:title="Notifikasi"
         />
 
     <item

@@ -1,10 +1,7 @@
 package com.example.mybimo;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
@@ -16,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import auth.Preference;
-import fragment.Course;
+import fragment.Notifikasi;
 import fragment.Dashboard;
 import fragment.Payment;
 import fragment.Profile;
@@ -97,8 +94,8 @@ public class Main extends AppCompatActivity implements NavigationBarView.OnItemS
             fragment = new Payment();
         } else if (selected == R.id.fr_home) {
             fragment = new Dashboard();
-        } else if (selected == R.id.fr_course) {
-            fragment = new Course();
+        } else if (selected == R.id.fr_notif) {
+            fragment = new Notifikasi();
         } else {
             fragment = new Profile();
         }

@@ -3,6 +3,8 @@ package fragment;
 import static android.app.Activity.RESULT_OK;
 import static auth.DB_Contract.ip;
 
+import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +24,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mybimo.Main;
 import com.example.mybimo.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
@@ -35,20 +42,32 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Adapter.GetPayment;
+import Adapter.VolleyMultipartRequest;
 import Payment.AfterPayment;
 
 public class Payment extends Fragment {
     public static final String URL = "http://" + ip + "/mybimo/getData/payment.php";
     private ImageView splashImage;
-    private Button btn_submit;
     private Button btn_upload;
+    private String idPembayaran;
+    private ImageView imgtransaksi;
+    private TextView afterpay;
+    private ImagePicker imagePicker;
+    private static String UserId;
     private TextView namaPembayaran;
+    private ImageView animationpayment;
     private TextView harga;
     private TextView nomorBank;
+    private TextView statuspay;
+    private ImageView pay_card;
     private View view; // Deklarasi variabel view
     List<GetPayment> paymentList = new ArrayList<>();
 
@@ -60,44 +79,34 @@ public class Payment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_payment, container, false); // Simpan referensi ke view
-        splashImage = view.findViewById(R.id.animationpayment);
-        btn_submit = view.findViewById(R.id.submit);
+        imgtransaksi = view.findViewById(R.id.img_transaksi);
+        statuspay = view.findViewById(R.id.status_pay);
         namaPembayaran = view.findViewById(R.id.nama_pembayaran);
         harga = view.findViewById(R.id.harga);
         btn_upload = view.findViewById(R.id.upload_file);
         nomorBank = view.findViewById(R.id.nomor_bank);
+        animationpayment = view.findViewById(R.id.animationpayment);
+        pay_card = view.findViewById(R.id.pay_card);
+        afterpay = view.findViewById(R.id.afterpay);
 
-        // Animation
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.animasi);
-        splashImage.startAnimation(animation);
+
+//        id user
+        UserId = Main.RequestUserId;
+        getTransaksiStatus(UserId);
+
+        fetchPayment();
 
         btn_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImagePicker.with(Payment.this)
-                        .crop()	    			//Crop image(Optional), Check Customization for more option
-                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-                        .start();
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, 1);
             }
         });
-        btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AfterPayment.class);
-                startActivity(intent);
-            }
-        });
-
-        // Fetch data
-        fetchPayment();
 
         return view;
     }
-
-   
-
-
 
     private void fetchPayment() {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
@@ -115,6 +124,8 @@ public class Payment extends Fragment {
                                         jsonObject.getString("harga"),
                                         jsonObject.getString("nomor_bank")
                                 );
+
+                                idPembayaran  = payment.getId();
 
                                 // Set data ke TextView yang sesuai
                                 if (view != null) {
@@ -136,6 +147,7 @@ public class Payment extends Fragment {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            System.out.println("gagal"+e.getMessage());
                             Toast.makeText(getContext(), "Kesalahan parsing data", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -143,6 +155,7 @@ public class Payment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        System.out.println("gagal"+error);
                         Toast.makeText(getContext(), "Gagal mengambil data", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -168,4 +181,139 @@ public class Payment extends Fragment {
 
         return formatted.toString();
     }
+
+//    transaksi image
+@Override
+public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+        Uri uri = data.getData();
+
+        if (uri != null) {
+            try {
+                InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
+                byte[] imageData = getBytes(inputStream);
+                uploadToServer(imageData);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e){
+                System.out.println("gagal"+e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+
+    private void uploadToServer(byte[] imageData) {
+        // URL endpoint untuk upload gambar
+        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/transaksi.php";
+
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(
+                Request.Method.POST, url, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(new String(response.data));
+                    if (jsonObject.getBoolean("success")) {
+                        Toast.makeText(getContext(),"Upload berhasil",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(),jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    System.out.println("gagal"+e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("gagal"+error);
+                        Toast.makeText(getContext(), "Gagal mengupload", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            // Override method untuk menambahkan parameter tambahan
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id_user", UserId); // Menambahkan ID pengguna ke parameter
+                params.put("id_pembayaran", idPembayaran); // Menambahkan ID pembayaran ke parameter
+                params.put("status", "0"); // Menambahkan status ke parameter
+                return params;
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                String fileName = UserId + "-"+System.currentTimeMillis() + ".jpg";
+                params.put("upload_bukti", new DataPart(fileName, imageData, "image/jpeg"));
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(volleyMultipartRequest);
+    }
+    private byte[] getBytes(InputStream inputStream) throws IOException{
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+        int len;
+        while ((len = inputStream.read(buffer)) != -1){
+            byteBuffer.write(buffer,0,len);
+        }
+        return byteBuffer.toByteArray();
+    }
+
+    private void getTransaksiStatus(String UserId){
+        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getstatustransaksi.php?id_user=" + UserId;
+        System.out.println("API"+url);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray transaksiarray = response.getJSONArray("transaksi");
+                    if (transaksiarray.length() == 0) {
+                        statuspay.setText("Belum Bayar");
+                    } else {
+                        JSONObject transaksi = transaksiarray.getJSONObject(0);
+                        int status = transaksi.getInt("status");
+                        System.out.println(transaksi.getInt("status"));
+
+                        if (status == 3) {
+                            statuspay.setText("Tidak Aktif");
+                        } else if (status == 0) {
+                            statuspay.setText("Status Pending");
+                        } else if (status == 1) {
+                            animationpayment.setVisibility(View.GONE);
+                            pay_card.setImageResource(R.drawable.rounded_borderdash);
+                            namaPembayaran.setVisibility(View.INVISIBLE);
+                            harga.setVisibility(View.INVISIBLE);
+                            nomorBank.setVisibility(View.INVISIBLE);
+                            afterpay.setVisibility(View.VISIBLE);
+                            btn_upload.setVisibility(View.INVISIBLE);
+                        } else if (status == 2){
+                            statuspay.setText("Ditolak");
+                        }
+                    }
+                } catch (JSONException e) {
+                    System.out.println("gagal"+e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("gagal sayang"+error.getMessage());
+                Toast.makeText(getContext(),"Gagal mengambil data",Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonObjectRequest);
+
+    }
+
 }

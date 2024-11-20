@@ -3,6 +3,7 @@ package fragment;
 import static android.content.Intent.getIntent;
 import static auth.DB_Contract.ip;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +12,10 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +67,7 @@ public class Profile extends Fragment {
     private ShapeableImageView image_profil;
     private TextView email;
     List<GetUser> getUserList = new ArrayList<>();
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -116,6 +121,14 @@ public class Profile extends Fragment {
         auth_name = view.findViewById(R.id.auth_name);
         image_profil = view.findViewById(R.id.image_profile);
         email = view.findViewById(R.id.email);
+        swipeRefreshLayout = view.findViewById(R.id.refershlayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
 
 
 
@@ -155,6 +168,19 @@ public class Profile extends Fragment {
         }
         return view;
 
+    }
+
+    @SuppressLint("MyApi")
+    private void refresh(){
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(),"Refresh",Toast.LENGTH_SHORT).show();
+                fetchUser(UserId);
+                loadImage(UserId);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        },1000);
     }
 
     private void fetchUser (String UserId) {

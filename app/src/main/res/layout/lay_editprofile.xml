@@ -50,82 +50,92 @@
             />
     </LinearLayout>
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/image_profile"
-        android:layout_marginTop="60dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:padding="5dp"
-        android:src="@drawable/icon_profile"
-        android:background="@color/black"
-       app:strokeColor="@color/black"
-        app:strokeWidth="3dp"
-        app:shapeAppearanceOverlay="@style/circular"
-        />
-    <TextView
-        android:id="@+id/update_image"
-        android:layout_marginTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Update Picture"
-        android:textColor="#00A6FF"
-        android:textSize="15sp"
-        android:fontFamily="sans-serif"
-        android:textFontWeight="700"
-        />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/username"
-        android:layout_width="335dp"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:hint="Username"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refershlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         >
 
-        <com.google.android.material.textfield.TextInputEditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/black"
-            />
+            android:orientation="vertical"
+            >
 
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email"
-        android:layout_width="335dp"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:hint="Email">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_profile"
+                android:layout_marginTop="60dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:padding="5dp"
+                android:src="@drawable/icon_profile"
+                android:background="@color/black"
+                app:strokeColor="@color/black"
+                android:layout_gravity="center"
+                app:strokeWidth="3dp"
+                app:shapeAppearanceOverlay="@style/circular" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:inputType="textEmailAddress"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/black"
-            />
+            <TextView
+                android:id="@+id/update_image"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update Picture"
+                android:textColor="#00A6FF"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif"
+                android:layout_gravity="center"
+                android:textFontWeight="700" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/phone"
-        android:layout_width="335dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content"
-        android:hint="Phone">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/username"
+                android:layout_width="335dp"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Username">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:inputType="number"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/black"
-            android:layout_height="wrap_content"
-            />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email"
+                android:layout_width="335dp"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Email">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:inputType="textEmailAddress"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone"
+                android:layout_width="335dp"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="Phone">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:inputType="number"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

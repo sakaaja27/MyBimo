@@ -4,12 +4,15 @@ import static androidx.core.content.ContentProviderCompat.requireContext;
 import static java.security.AccessController.getContext;
 import static auth.DB_Contract.ip;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +29,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -78,6 +82,7 @@ public class editprofile extends AppCompatActivity {
     private ShapeableImageView image_profile;
     List<GetUser> getUserList = new ArrayList<>();
     List<DataPart> DataPart = new ArrayList<>();
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +95,7 @@ public class editprofile extends AppCompatActivity {
         usernamelay = findViewById(R.id.username);
         username = (TextInputEditText) usernamelay.getEditText();
         emaillay = findViewById(R.id.email);
+        swipeRefreshLayout = findViewById(R.id.refershlayout);
         email = (TextInputEditText) emaillay.getEditText();
         phonelay = findViewById(R.id.phone);
         phone = (TextInputEditText) phonelay.getEditText();
@@ -144,6 +150,23 @@ public class editprofile extends AppCompatActivity {
                         .start();
             }
         });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshScreen();
+            }
+        });
+    }
+    @SuppressLint("NewApi")
+    private void refreshScreen(){
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(editprofile.this,"Refresh",Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        },1000);
     }
 
     @Override

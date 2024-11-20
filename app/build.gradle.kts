@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.google.material)
     implementation(libs.volley)
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation(libs.imagepicker)
     implementation(libs.androidpdf)

@@ -2,6 +2,7 @@ package fragment;
 
 import static auth.DB_Contract.ip;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -9,8 +10,10 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +61,7 @@ public class Dashboard extends Fragment{
     private RecyclerView recyclerView;
     private ImageView imageView;
     private MateriAdapter materiAdapter;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
     private TextView auth_name;
     private View view;
     private ShapeableImageView image_profil;
@@ -102,7 +105,7 @@ public class Dashboard extends Fragment{
 
         carouselRecyclerView = view.findViewById(R.id.carousel_recycler_view); // Tambahkan ini
         recyclerView = view.findViewById(R.id.recycler_view);
-
+        swipeRefreshLayout = view.findViewById(R.id.refreshlayoutdashboard);
         auth_name = view.findViewById(R.id.auth_name);
         materiArrayList = new ArrayList<>();
         image_profil = view.findViewById(R.id.image_profile);
@@ -123,9 +126,29 @@ public class Dashboard extends Fragment{
             Toast.makeText(getContext(), "User  ID tidak ditemukan", Toast.LENGTH_SHORT).show();
         }
         setupCarousel();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
         return view;
 
 
+    }
+
+    @SuppressLint("MyApi")
+    private void refresh(){
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(),"Refresh",Toast.LENGTH_SHORT).show();
+                fetchMateriData();
+                fetchUser(UserId);
+                loadImage(UserId);
+            }
+        },1000);
     }
 
     private void setupCarousel() {

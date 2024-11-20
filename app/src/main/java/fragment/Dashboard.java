@@ -144,9 +144,9 @@ public class Dashboard extends Fragment{
             @Override
             public void run() {
                 Toast.makeText(getContext(),"Refresh",Toast.LENGTH_SHORT).show();
-                fetchMateriData();
                 fetchUser(UserId);
                 loadImage(UserId);
+                swipeRefreshLayout.setRefreshing(false);
             }
         },1000);
     }

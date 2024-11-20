@@ -329,10 +329,10 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
                         if (status == 3) {
                             statuspay.setText("Tidak Aktif");
-                            sendNotification("MyBimo","Status tangganan anda sudah tidak aktif");
+                            sendNotification("MyBimo","Status langganan anda sudah tidak aktif");
                         } else if (status == 0) {
                             statuspay.setText("Status Pending");
-                            sendNotification("MyBimo","Status transaksi anda menunggu persetujuan ");
+                            sendNotification("MyBimo","Status transaksi anda menunggu persetujuan");
                         } else if (status == 1) {
                             animationpayment.setVisibility(View.GONE);
                             pay_card.setImageResource(R.drawable.rounded_borderdash);
@@ -366,7 +366,6 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 
 //    notifikasi
-
     private void sendNotification(String title, String message) {
         if (!areNotificationsEnabled()) {
             showNotificationSettingsDialog();

@@ -1,5 +1,7 @@
 package fragment;
 
+import static Notifikasi.NotificationUtil.createNotificationChannel;
+import static Notifikasi.NotificationUtil.startCheckingTransaksi;
 import static auth.DB_Contract.ip;
 
 import android.annotation.SuppressLint;
@@ -42,7 +44,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import Notifikasi.NotificationUtil;
 import Adapter.GetUser;
 import Adapter.ImageAdapter;
 import Adapter.Materi;
@@ -110,7 +112,9 @@ public class Dashboard extends Fragment{
         materiArrayList = new ArrayList<>();
         image_profil = view.findViewById(R.id.image_profile);
 
+
         fetchMateriData();
+
 
 
 //        dinamis materi
@@ -118,6 +122,10 @@ public class Dashboard extends Fragment{
 
         // Ambil id pengguna dari variable statis di Main
         UserId = Main.RequestUserId;
+
+//        notif
+        createNotificationChannel(getContext());
+        startCheckingTransaksi(getContext(), UserId);
 
         // Fetch data
         if (UserId != null) {
@@ -136,6 +144,13 @@ public class Dashboard extends Fragment{
         return view;
 
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Hentikan pengecekan status transaksi saat Activity dihancurkan
+        NotificationUtil.stopCheckingTransaksi();
     }
 
     @SuppressLint("MyApi")

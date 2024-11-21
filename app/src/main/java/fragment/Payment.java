@@ -2,11 +2,14 @@ package fragment;
 
 import static android.app.Activity.RESULT_OK;
 import static androidx.core.content.ContextCompat.getSystemService;
+import static Notifikasi.NotificationUtil.createNotificationChannel;
+import static Notifikasi.NotificationUtil.startCheckingTransaksi;
 import static auth.DB_Contract.ip;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.ContentResolver;
@@ -18,7 +21,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
+import Notifikasi.NotificationUtil;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
@@ -118,8 +121,10 @@ public class Payment extends Fragment {
 
 //        id user
         UserId = Main.RequestUserId;
-        createNotificationChannel();
         getTransaksiStatus(UserId);
+        createNotificationChannel(getContext());
+        startCheckingTransaksi(getContext(), UserId);
+
 
         fetchPayment();
 
@@ -135,6 +140,13 @@ public class Payment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Hentikan pengecekan status transaksi saat Activity dihancurkan
+        NotificationUtil.stopCheckingTransaksi();
     }
 
     @SuppressLint("MyApi")
@@ -321,7 +333,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
                     JSONArray transaksiarray = response.getJSONArray("transaksi");
                     if (transaksiarray.length() == 0) {
                         statuspay.setText("Belum Bayar");
-                        sendNotification("MyBimo","Belum ada pembayaran yang dilakukan");
+
                     } else {
                         JSONObject transaksi = transaksiarray.getJSONObject(0);
                         int status = transaksi.getInt("status");
@@ -329,10 +341,9 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
                         if (status == 3) {
                             statuspay.setText("Tidak Aktif");
-                            sendNotification("MyBimo","Status langganan anda sudah tidak aktif");
                         } else if (status == 0) {
                             statuspay.setText("Status Pending");
-                            sendNotification("MyBimo","Status transaksi anda menunggu persetujuan");
+
                         } else if (status == 1) {
                             animationpayment.setVisibility(View.GONE);
                             pay_card.setImageResource(R.drawable.rounded_borderdash);
@@ -342,10 +353,12 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
                             afterpay.setVisibility(View.VISIBLE);
                             btn_upload.setVisibility(View.INVISIBLE);
                             statuspay.setText("Terkonfirmasi");
-                            sendNotification("MyBimo","Status transaksi anda terkonfirmasi ");
+
+
                         } else if (status == 2){
                             statuspay.setText("Ditolak");
-                            sendNotification("MyBimo","Status transaksi anda ditolak ");
+
+
                         }
                     }
                 } catch (JSONException e) {
@@ -365,60 +378,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     }
 
-//    notifikasi
-    private void sendNotification(String title, String message) {
-        if (!areNotificationsEnabled()) {
-            showNotificationSettingsDialog();
-            return;
-        }
 
-        try {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
-                    .setSmallIcon(R.drawable.mybimo_font)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-            notificationManager.notify((int) System.currentTimeMillis(), builder.build());
-        } catch (SecurityException e) {
-            // Tangani SecurityException jika terjadi
-            Toast.makeText(getContext(), "Gagal mengirim notifikasi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private boolean areNotificationsEnabled() {
-        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        return notificationManager != null && notificationManager.areNotificationsEnabled();
-    }
-    private void showNotificationSettingsDialog() {
-        new AlertDialog.Builder(getContext())
-                .setTitle("Notifikasi Dinonaktifkan")
-                .setMessage("Notifikasi untuk aplikasi ini dinonaktifkan. Silakan aktifkan di pengaturan.")
-                .setPositiveButton("Pengaturan", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-                        intent.putExtra(Settings.EXTRA_APP_PACKAGE, getContext().getPackageName());
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton("Batal", null)
-                .show();
-    }
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "MyBimo Channel";
-            String description = "Channel untuk notifikasi MyBimo";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-
-            NotificationManager notificationManager = getContext().getSystemService(NotificationManager.class);
-            if (notificationManager != null) {
-                notificationManager.createNotificationChannel(channel);
-            }
-        }
-    }
 
 
 }

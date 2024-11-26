@@ -94,8 +94,8 @@ public class Register_view extends AppCompatActivity {
                 else if (phone.length() < 12) {
                     Toast.makeText(Register_view.this, "Phone number must be at least 12 number", Toast.LENGTH_SHORT).show();
                 }
-                else if (password.length() < 8) {
-                    Toast.makeText(Register_view.this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
+                else if (password.length() < 6) {
+                    Toast.makeText(Register_view.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     // Membuat StringRequest untuk POST request

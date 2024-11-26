@@ -13,10 +13,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import auth.Preference;
-import fragment.Notifikasi;
+import fragment.MyCourse;
 import fragment.Dashboard;
 import fragment.Payment;
 import fragment.Profile;
+import fragment.Zoom;
 
 public class Main extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
@@ -94,9 +95,12 @@ public class Main extends AppCompatActivity implements NavigationBarView.OnItemS
             fragment = new Payment();
         } else if (selected == R.id.fr_home) {
             fragment = new Dashboard();
-        } else if (selected == R.id.fr_notif) {
-            fragment = new Notifikasi();
-        } else {
+        } else if (selected == R.id.fr_course) {
+            fragment = new MyCourse();
+        } else if (selected == R.id.fr_zoom){
+            fragment = new Zoom();
+        }
+        else {
             fragment = new Profile();
         }
 

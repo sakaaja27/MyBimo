@@ -5,7 +5,6 @@ import static androidx.core.content.ContextCompat.getSystemService;
 import static Notifikasi.NotificationUtil.createNotificationChannel;
 import static Notifikasi.NotificationUtil.startCheckingTransaksi;
 import static auth.DB_Contract.ip;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,7 +25,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
@@ -40,7 +38,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -52,11 +49,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.mybimo.Main;
 import com.example.mybimo.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -65,7 +60,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import Adapter.GetPayment;
 import Adapter.VolleyMultipartRequest;
 import Payment.AfterPayment;

@@ -3,48 +3,120 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/bg_white"
+    android:background="@drawable/gradient_backgroundmodal"
     android:padding="16dp">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <!-- LinearLayout horizontal untuk judul dan tombol close -->
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:text="Reset Password"
+            android:textFontWeight="700"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/close"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="900"
+            android:background="@drawable/rounded_lingkaran"
+            android:text="X"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:padding="0dp"
+            android:gravity="center"
+        />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:textFontWeight="500"
+        android:text="Old Password"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/old_password"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="10dp"
+        android:hint="Enter old password"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textFontWeight="500"
+        android:inputType="textPassword"
+        android:background="@drawable/rounded_edittext_background"
+        android:paddingLeft="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:textFontWeight="500"
+        android:text="New Password"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/new_password"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="10dp"
+        android:hint="Enter new password"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textFontWeight="500"
+        android:inputType="textPassword"
+        android:background="@drawable/rounded_edittext_background"
+        android:paddingLeft="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:textFontWeight="500"
+        android:text="Confirm new Password"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/cofirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="10dp"
+        android:hint="Enter confirm new password"
+        android:fontFamily="sans-serif"
+        android:textFontWeight="500"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:inputType="textPassword"
+        android:background="@drawable/rounded_edittext_background"
+        android:paddingLeft="15dp"/>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="Enter your old password">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/old_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/black"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="Enter new password">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/new_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="Enter Confirm password">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/cofirm_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
+        android:layout_gravity="end"
+        android:textFontWeight="700"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif"
+        android:backgroundTint="#8E5EFF"
+        android:text="Submit"/>
 </LinearLayout>

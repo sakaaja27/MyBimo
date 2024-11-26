@@ -13,9 +13,14 @@
         />
 
     <item
-        android:id="@+id/fr_notif"
+        android:id="@+id/fr_course"
         android:icon="@drawable/course"
-        android:title="Notifikasi"
+        android:title="MyCourse"
+        />
+    <item
+        android:id="@+id/fr_zoom"
+        android:icon="@drawable/zoom_icon"
+        android:title="Zoom"
         />
 
     <item

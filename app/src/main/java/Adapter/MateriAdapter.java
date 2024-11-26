@@ -1,4 +1,5 @@
 package Adapter;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,18 +17,11 @@ import java.util.ArrayList;
 
 // Adapter untuk RecyclerView yang menampilkan daftar materi
 public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder> {
-
     private ArrayList<Materi> materiArrayList; // List untuk menyimpan data materi
     private Context context; // Context aplikasi
     private OnClickListener onClickListener; // Listener untuk menangani klik item
 
-    // Constructor pertama
-    public MateriAdapter(Context context, ArrayList<Materi> materiArrayList) {
-        this.context = context;
-        this.materiArrayList = materiArrayList;
-    }
-
-    // Constructor kedua dengan tambahan OnClickListener
+    // Constructor dengan OnClickListener
     public MateriAdapter(ArrayList<Materi> materiArrayList, Context context, OnClickListener onClickListener) {
         this.materiArrayList = materiArrayList;
         this.context = context;
@@ -48,11 +42,10 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
         // Memuat gambar menggunakan Glide
         Glide.with(context).load(materi.getIcon()).into(holder.imageView);
         holder.textView.setText(materi.getNama());
-        holder.itemView(materiArrayList.get(position), onClickListener);
 
         // Menambahkan listener klik pada item
         holder.itemView.setOnClickListener(v -> {
-            if (onClickListener != null){
+            if (onClickListener != null) {
                 onClickListener.onClickListener(position);
             }
         });
@@ -74,20 +67,10 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.ViewHolder
             imageView = itemView.findViewById(R.id.icon_image);
             textView = itemView.findViewById(R.id.text_view);
         }
-
-        // Metode untuk menambahkan listener klik pada item
-        public void itemView(Materi materi, OnClickListener onClickListener) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onClickListener.onClickListener(getAdapterPosition());
-                }
-            });
-        }
     }
 
     // Interface untuk menangani klik pada item
-    public interface OnClickListener{
+    public interface OnClickListener {
         void onClickListener(int position);
     }
 }

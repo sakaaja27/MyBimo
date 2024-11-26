@@ -7,10 +7,12 @@ import static auth.DB_Contract.ip;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -33,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.mybimo.Main;
 import com.example.mybimo.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.carousel.CarouselLayoutManager;
 import com.google.android.material.carousel.CarouselSnapHelper;
 import com.google.android.material.carousel.HeroCarouselStrategy;
@@ -141,6 +144,15 @@ public class Dashboard extends Fragment{
                 refresh();
             }
         });
+
+        // Menambahkan listener untuk ikon "View All"
+        TextView viewAllTextView = view.findViewById(R.id.view_all);
+        viewAllTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAllMateriDialog();
+            }
+        });
         return view;
 
 
@@ -210,8 +222,6 @@ public class Dashboard extends Fragment{
     private void fetchMateriData() {
         // URL untuk mengambil data materi
         String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getmateriawal.php";
-        String urlTransaksi = "http://" + ip + "/website%20mybimo/mybimo/src/getData/transaksi.php";
-        // URL dasar untuk gambar
         String imageUrl = "http://" + ip +"/website%20mybimo/mybimo/src/getData/";
 
         // Membuat request JSON Array untuk materi
@@ -223,7 +233,6 @@ public class Dashboard extends Fragment{
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                // Mengambil data dari JSON
                                 String id = jsonObject.getString("id");
                                 String fotoIcon = imageUrl + jsonObject.getString("foto_icon");
                                 String nama = jsonObject.getString("judul_materi");
@@ -234,14 +243,18 @@ public class Dashboard extends Fragment{
                                 e.printStackTrace();
                             }
                         }
-                        // Setelah data diambil, setup RecyclerView
-                        setupRecyclerView();
+                        // Hanya ambil 5 materi untuk ditampilkan di dashboard
+                        if (materiArrayList.size() > 3) {
+                            List<Materi> displayedMateri = materiArrayList.subList(0,3);
+                            setupRecyclerView(displayedMateri);
+                        } else {
+                            setupRecyclerView(materiArrayList);
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // Menampilkan pesan error jika terjadi kesalahan
                         Toast.makeText(getActivity(), "ERROR MATERI: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -251,21 +264,64 @@ public class Dashboard extends Fragment{
     }
 
     // Metode untuk mengatur RecyclerView
-    private void setupRecyclerView() {
-        // Inisialisasi adapter
-        materiAdapter = new MateriAdapter(getActivity(), materiArrayList);
-        materiAdapter = new MateriAdapter(materiArrayList, getActivity(), new MateriAdapter.OnClickListener() {
+    private void setupRecyclerView(List<Materi> displayedMateri) {
+        // Mengatur GridLayoutManager dengan 3 kolom
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        materiAdapter = new MateriAdapter(new ArrayList<>(displayedMateri), getActivity(), new MateriAdapter.OnClickListener() {
             @Override
             public void onClickListener(int position) {
-                Materi selectedMateri = materiArrayList.get(position);
-                checkUserTransaction(selectedMateri.getId());
+                Materi selectedMateri = displayedMateri.get(position);
+                checkUserTransaction(selectedMateri.getId()); // Memanggil metode yang benar
             }
         });
 
-        // Mengatur layout manager (GridLayoutManager dengan 3 kolom)
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        // Menetapkan adapter ke RecyclerView
         recyclerView.setAdapter(materiAdapter);
+    }
+
+    private void showAllMateriDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
+        View dialogView = getLayoutInflater().inflate(R.layout.bottomdialog_materi, null);
+        RecyclerView allMateriRecyclerView = dialogView.findViewById(R.id.all_materi_recycler_view);
+
+        // Mengatur GridLayoutManager dengan 3 kolom
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        allMateriRecyclerView.setLayoutManager(gridLayoutManager);
+
+        // Menambahkan ItemDecoration untuk jarak antar item
+        allMateriRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                int position = parent.getChildAdapterPosition(view); // item position
+                int column = position % 3; // item column
+
+                // Atur jarak di kiri dan kanan
+                outRect.left = (column * 8); // Margin kiri
+                outRect.right = (8 - column) * 8; // Margin kanan
+
+                // Atur jarak di atas dan bawah
+                if (position < 3) { // jika item di baris pertama
+                    outRect.top = 8; // Margin atas
+                }
+                outRect.bottom = 8; // Margin bawah
+            }
+        });
+
+        // Buat adapter dengan OnClickListener
+        MateriAdapter allMateriAdapter = new MateriAdapter(materiArrayList, getActivity(), new MateriAdapter.OnClickListener() {
+            @Override
+            public void onClickListener(int position) {
+                // Tangani klik item di sini
+                Materi selectedMateri = materiArrayList.get(position);
+                checkUserTransaction(selectedMateri.getId()); // Memanggil metode yang benar
+            }
+        });
+
+        allMateriRecyclerView.setAdapter(allMateriAdapter);
+
+        dialog.setContentView(dialogView);
+        dialog.show();
     }
 
     // Metode untuk memeriksa status transaksi pengguna

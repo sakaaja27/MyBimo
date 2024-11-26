@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -17,11 +19,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -276,86 +280,107 @@ public class Profile extends Fragment {
         View dialogView = inflater.inflate(R.layout.lay_modalresetpass, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        // Inflate the custom title layout
-        View titleView = inflater.inflate(R.layout.dialog_title, null);
-        builder.setCustomTitle(titleView) // Set the custom title
-                .setView(dialogView)
-                .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        TextInputEditText oldPassword = dialogView.findViewById(R.id.old_password);
-                        TextInputEditText newPassword = dialogView.findViewById(R.id.new_password);
-                        TextInputEditText confirmPassword = dialogView.findViewById(R.id.cofirm_password); // Fixed typo in ID
-                        String oldPass = oldPassword.getText().toString().trim();
-                        String newPass = newPassword.getText().toString().trim();
-                        String confirmPass = confirmPassword.getText().toString().trim();
-
-                        // Input validation
-                        if (oldPass.isEmpty() || newPass.isEmpty() || confirmPass.isEmpty()) {
-                            massage("Fields are empty");
-                            return; // Early exit
-                        }
-                        if (!newPass.equals(confirmPass)) {
-                            massage("New password and confirm password do not match");
-                            return; // Early exit
-                        }
-
-                        String URL = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getPassword.php?id=" + UserId; // Use HTTPS
-
-                        // Create request for password reset
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        Log.d("Response", response);
-                                        try {
-                                            JSONObject jsonResponse = new JSONObject(response);
-                                            boolean success = jsonResponse.getBoolean("success");
-                                            String message = jsonResponse.getString("message");
-                                            massage(message); // Show message from server
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                            massage("Error parsing response: " + e.getMessage());
-                                        }
-                                    }
-                                },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        massage("Error: " + error.getMessage());
-                                        System.out.println(error.getMessage());
-                                    }
-                                }) {
-                            @Override
-                            protected Map<String, String> getParams() {
-                                Map<String, String> params = new HashMap<>();
-                                params.put("id", UserId);
-                                params.put("old_password", oldPass);
-                                params.put("new_password", newPass);
-                                params.put("confirm_password", confirmPass);
-                                return params;
-                            }
-                        };
-
-                        // Add request to the queue
-                        Volley.newRequestQueue(requireContext()).add(stringRequest);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss(); // Close dialog
-                    }
-                });
+        // Set view to the dialog without setting a title and without Cancel button
+        builder.setView(dialogView);
 
         AlertDialog dialog = builder.create();
         dialog.show();
 
         // Set dialog size
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-        params.width = WindowManager.LayoutParams.MATCH_PARENT; // Full width
-        params.height = (int) (getResources().getDisplayMetrics().heightPixels * 0.5); // Half screen height
+        params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 337, getResources().getDisplayMetrics());
+        params.height = (int) (getResources().getDisplayMetrics().heightPixels * 0.6); // Half screen height
         dialog.getWindow().setAttributes(params);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        // Get references to the EditTexts and Button in the dialog
+        EditText oldPassword = dialogView.findViewById(R.id.old_password);
+        EditText newPassword = dialogView.findViewById(R.id.new_password);
+        EditText confirmPassword = dialogView.findViewById(R.id.cofirm_password); // Fixed typo in ID
+        Button submitButton = dialogView.findViewById(R.id.submit);
+        TextView closeTextView = dialogView.findViewById(R.id.close); // Reference to the close TextView
+
+        // Set OnClickListener for the close TextView
+        closeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss(); // Close the dialog
+            }
+        });
+
+        // Set OnClickListener for the submit button
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String oldPass = oldPassword.getText().toString().trim();
+                String newPass = newPassword.getText().toString().trim();
+                String confirmPass = confirmPassword.getText().toString().trim();
+
+                // Input validation
+                if (oldPass.isEmpty() || newPass.isEmpty() || confirmPass.isEmpty()) {
+                    massage("Fields are empty");
+                    return; // Early exit
+                }
+                if (newPass.length() < 6) {
+                    massage("New password must be 6 characters or more");
+                    return; // Early exit
+                }
+                if (confirmPass.length() < 6) {
+                    massage("Confirm password must be 6 characters or more");
+                    return; // Early exit
+                }
+                if (!newPass.equals(confirmPass)) {
+                    massage("New password and confirm password do not match");
+                    return; // Early exit
+                }
+
+                String URL = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getPassword.php?id=" + UserId; // Use HTTPS
+
+                // Create request for password reset
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d("Response", response);
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(response);
+                                    boolean success = jsonResponse.getBoolean("success");
+                                    String message = jsonResponse.getString("message");
+                                    massage(message); // Show message from server
+
+                                    // Close dialog if password reset is successful
+                                    if (success) {
+                                        dialog.dismiss(); // Close the dialog
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    massage("Error parsing response: " + e.getMessage());
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                massage("Error: " + error.getMessage());
+                                System.out.println(error.getMessage());
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("id", UserId);
+                        params.put("old_password", oldPass);
+                        params.put("new_password", newPass);
+                        params.put("confirm_password", confirmPass);
+                        return params;
+                    }
+                };
+
+                // Add request to the queue
+                Volley.newRequestQueue(requireContext()).add(stringRequest);
+            }
+        });
     }
 
     public void massage(String message) {

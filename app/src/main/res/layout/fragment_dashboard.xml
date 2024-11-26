@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_white"
+    android:background="@drawable/rounded_border_login"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="fragment.Dashboard">
 
@@ -42,10 +42,8 @@
                     android:background="@color/black"
                     app:strokeColor="#00EBC8"
                     app:strokeWidth="3dp"
-                    app:shapeAppearanceOverlay="@style/circular"
-                    />
+                    app:shapeAppearanceOverlay="@style/circular" />
             </RelativeLayout>
-
 
             <!-- Carousel Section -->
             <androidx.recyclerview.widget.RecyclerView
@@ -57,28 +55,49 @@
                 android:orientation="horizontal"
                 android:scrollbars="horizontal" />
 
-
-
             <!-- Scrollable Content -->
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <!-- Materi Section -->
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="sans-serif"
                         android:paddingHorizontal="40dp"
-                        android:text="Materi"
-                        android:textColor="@color/black"
-                        android:textFontWeight="700"
-                        android:textSize="20sp" />
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif"
+                            android:text="Materi"
+                            android:textColor="@color/black"
+                            android:textFontWeight="700"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/view_all"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="View All"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif"
+                            android:textFontWeight="700"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_marginStart="10dp" />
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view"
@@ -95,6 +114,7 @@
                         android:paddingHorizontal="40dp"
                         android:text="New Features"
                         android:textColor="@color/black"
+                        android:layout_marginTop="30dp"
                         android:textFontWeight="700"
                         android:textSize="20sp" />
 
@@ -104,7 +124,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/rectangle"
-                        android:src="@drawable/general_quiz" />
+                        android:src="@drawable/general_quiz"/>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

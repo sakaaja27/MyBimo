@@ -119,6 +119,7 @@
                         android:textSize="20sp" />
 
                     <ImageView
+                        android:id="@+id/generalQuiz"
                         android:layout_width="336dp"
                         android:layout_height="95dp"
                         android:layout_gravity="center"

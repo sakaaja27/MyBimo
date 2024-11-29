@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="10dp">
+    <androidx.cardview.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:cardCornerRadius="15dp"
+        app:cardBackgroundColor="#CEDFEC">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/mybimo_bluefont"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="General Quiz "
+            android:fontFamily="sans-serif"
+            android:textFontWeight="600"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="90dp"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp">
+            <TextView
+                android:id="@+id/hasil_benar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Soal benar : "
+                android:textSize="16sp"
+                android:textFontWeight="400"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/black"
+
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="90dp"/>
+            <TextView
+                android:id="@+id/nilai_benar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"
+                android:textFontWeight="400"
+                android:textColor="@color/black"
+
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="179dp"/>
+            <TextView
+                android:id="@+id/hasil_salah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Soal salah : "
+                android:textSize="16sp"
+                android:textFontWeight="400"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/black"
+
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="200dp"/>
+            <TextView
+                android:id="@+id/nilai_salah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:textSize="16sp"
+                android:textFontWeight="400"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/black"
+
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="287dp"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tanggal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:text="12 / 10 / 2024 18.05 WIB"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="90dp"/>
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

@@ -32,6 +32,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.mybimo.Main;
 import com.example.mybimo.R;
 
 import org.json.JSONArray;
@@ -55,6 +56,9 @@ public class MateriGrammerly extends AppCompatActivity {
     private ArrayList<MateriSub> materiSubArrayList;
     private ImageView rounded;
     private ImageView arrow;
+    private static String UserId;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,24 @@ public class MateriGrammerly extends AppCompatActivity {
         materiSubArrayList = new ArrayList<>();
         arrow = findViewById(R.id.arrow_back);
         rounded = findViewById(R.id.rounded_login);
+
+        btn_soal = findViewById(R.id.btn_soal);
+        btn_soal.setVisibility(View.GONE);
+        UserId = Main.RequestUserId;
+
+        //btn untuk ke halaman soal
+        btn_soal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MateriGrammerly.this, BankSoal.class);
+                String materiId = getIntent().getStringExtra("id");
+                intent.putExtra("userId", UserId);
+                intent.putExtra("id", materiId);
+                Log.d("User ID", UserId);
+                Log.d("Materi ID", materiId);
+                startActivity(intent);
+            }
+        });
 
 
         arrow.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +105,7 @@ public class MateriGrammerly extends AppCompatActivity {
 
     //buat method buat nampung recycle viewnya yang datanya dari db
     public void fetchSubGrammar() {
+
         // Mengambil ID materi yang dikirim dari aktivitas sebelumnya
         String id = getIntent().getStringExtra("id");
 
@@ -116,6 +139,8 @@ public class MateriGrammerly extends AppCompatActivity {
                                 params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                                 icon_submateri.setLayoutParams(params); // Menerapkan LayoutParams ke icon_submateri
                                 Toast.makeText(MateriGrammerly.this, "COMING SOON", Toast.LENGTH_SHORT).show();
+                               // jika materi belum ada maka button tidak ditampilkan
+                                btn_soal.setVisibility(View.GONE);
                                 return;
                             }
                             // Iterasi melalui setiap objek dalam JSONArray
@@ -145,6 +170,7 @@ public class MateriGrammerly extends AppCompatActivity {
 
                             // Memanggil method untuk setup RecyclerView setelah data diambil
                             setupRecyclerView();
+                            checkSoal(id); // buat check apapakh dalam materi ini terdapat soal
                         } catch (JSONException e) {
                             // Menangani error parsing JSON
                             e.printStackTrace();
@@ -169,6 +195,46 @@ public class MateriGrammerly extends AppCompatActivity {
 
         // Menambahkan request ke antrian Volley untuk dieksekusi
         Volley.newRequestQueue(MateriGrammerly.this).add(stringRequest);
+    }
+    // buat check apapakah dalam materi ini terdapat soal, jika ada maka button soal akan ditampilkan
+    private void checkSoal(String id) {
+        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getSoal.php";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+
+                            if (jsonArray.length() > 0) {
+                                // Jika soal ada, menampilkan tombol soal
+                                btn_soal.setVisibility(View.VISIBLE);
+                            } else {
+                                // Jika tidak ada soal, sembunyikan tombol soal
+                                btn_soal.setVisibility(View.GONE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MateriGrammerly.this, "ERROR: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", id);
+                return params;
+            }
+        };
+
+        Volley.newRequestQueue(MateriGrammerly.this).add(stringRequest);
+
     }
 
     private void loadImage(String imageUrl) {

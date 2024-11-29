@@ -1,8 +1,12 @@
 package com.example.mybimo;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -31,6 +35,8 @@ public class Main extends AppCompatActivity implements NavigationBarView.OnItemS
     public static String uploadImage;
     private int currentSelectedItem = -1;
     private Preference preference;
+    private View view;
+    private BottomNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,9 @@ public class Main extends AppCompatActivity implements NavigationBarView.OnItemS
         }
         // Mengatur item home sebagai item yang terpilih
         navigationView.setSelectedItemId(R.id.fr_home);
+
+
+
 
         // Mengambil data user dari intent
         RequestUserId = getIntent().getStringExtra("id");

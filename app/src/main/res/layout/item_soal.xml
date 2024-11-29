@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+        <TextView
+            android:id="@+id/soal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/black"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Pronouns are words that can replace a noun or noun phrase. Pronouns avoid repeating the same noun or noun phrase that has been mentioned before."/>
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <RadioButton
+            android:id="@+id/radio_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pilihan a"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif"/>
+        <RadioButton
+            android:id="@+id/radio_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pilihan b"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif"/>
+
+        <RadioButton
+            android:id="@+id/radio_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pilihan c"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif"/>
+    </RadioGroup>
+    </LinearLayout>

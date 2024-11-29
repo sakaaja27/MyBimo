@@ -52,6 +52,7 @@ import Adapter.GetUser;
 import Adapter.ImageAdapter;
 import Adapter.Materi;
 import Adapter.MateriAdapter;
+import materi.GeneralQuiz;
 import materi.MateriGrammerly;
 import materi.MateriVocab;
 
@@ -72,6 +73,8 @@ public class Dashboard extends Fragment{
     private ShapeableImageView image_profil;
     private RecyclerView carouselRecyclerView;
     private ArrayList<Materi> materiArrayList;
+    private ImageView generalQuiz;
+//    private boolean allQuiz = true;
     List<GetUser> getUserList = new ArrayList<>();
 
 
@@ -115,8 +118,18 @@ public class Dashboard extends Fragment{
         materiArrayList = new ArrayList<>();
         image_profil = view.findViewById(R.id.image_profile);
 
+        generalQuiz = view.findViewById(R.id.generalQuiz);
+        generalQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cekSoalQuiz();
+            }
+        });
+
+
 
         fetchMateriData();
+
 
 
 
@@ -157,6 +170,41 @@ public class Dashboard extends Fragment{
 
 
     }
+// buat cek ada soal apa ngga
+    private void cekSoalQuiz() {
+        generalQuiz.setEnabled(false);
+
+        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getGeneralQuiz.php";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            // Jika ada soal, maka ketika general quiz di klik akan berpindah ke halaman quiz
+                            if (response.length() > 0) {
+                                Intent intent = new Intent(getContext(), GeneralQuiz.class);
+                                startActivity(intent);
+                            } else {
+                                // Jika tidak ada soal maka akan menampilakn quiz bekum tersedia
+                                Toast.makeText(getContext(), "Quiz belum tersedia", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        finally {
+                            generalQuiz.setEnabled(true); // Aktifkan kembali tombol
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "Gagal memuat soal: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        generalQuiz.setEnabled(true); // Aktifkan kembali tombol
+                    }
+                });
+        Volley.newRequestQueue(getActivity()).add(jsonArrayRequest);
+    }
+
 
     @Override
     public void onDestroy() {

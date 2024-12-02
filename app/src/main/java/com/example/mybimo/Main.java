@@ -3,6 +3,7 @@ package com.example.mybimo;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import Notifikasi.NotificationUtil;
+import auth.Login_view;
 import auth.Preference;
 import fragment.MyCourse;
 import fragment.Dashboard;
@@ -23,7 +26,7 @@ import fragment.Payment;
 import fragment.Profile;
 import fragment.Zoom;
 
-public class Main extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
+public class Main extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener,Profile.LogoutListener {
 
     // Variabel static untuk menyimpan data user
     public static String RequestUserId;
@@ -37,6 +40,18 @@ public class Main extends AppCompatActivity implements NavigationBarView.OnItemS
     private Preference preference;
     private View view;
     private BottomNavigationView navigationView;
+
+    @Override
+    public void onLogout() {
+        // Hentikan pemeriksaan transaksi
+        NotificationUtil.stopCheckingTransaksi();
+
+        // Arahkan pengguna kembali ke halaman login
+        Intent intent = new Intent(this, Login_view.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // Tutup activity saat ini
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

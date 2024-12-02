@@ -2,12 +2,16 @@ package fragment;
 
 import static auth.DB_Contract.ip;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +42,7 @@ public class MyCourse extends Fragment {
     private static String UserId;
     private View view;
     private static final String TAG = "MyCourse";
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public MyCourse() {
         // Required empty public constructor
@@ -49,21 +54,38 @@ public class MyCourse extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        swipeRefreshLayout = view.findViewById(R.id.refreshlayoutmycourse);
         historyArrayList = new ArrayList<>();
         adapterHistory = new AdapterHistory(historyArrayList, getContext());
         recyclerView.setAdapter(adapterHistory);
 
-        // untuk mengambil id user
-        if (Main.RequestUserId != null && !Main.RequestUserId.isEmpty()) {
-            UserId = Main.RequestUserId;
-            Log.d(TAG, "User ID: " + UserId);
+
+        UserId = Main.RequestUserId;
+
+        if (UserId != null ){
             fetchHistory(UserId);
-        } else {
-            Toast.makeText(getContext(), "User ID tidak ditemukan!", Toast.LENGTH_SHORT).show();
         }
 
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+
         return view;
+    }
+    @SuppressLint("MyApi")
+    private void refresh(){
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(),"Refresh",Toast.LENGTH_SHORT).show();
+                fetchHistory(UserId);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        },1000);
     }
 
     private void fetchHistory(String UserId) {
@@ -104,7 +126,7 @@ public class MyCourse extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Gagal mendapatkan data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Belum ada bank soal yang dikerjakan " , Toast.LENGTH_SHORT).show();
                         Log.e(TAG, "Volley Error: " + error.getMessage());
                     }
                 });

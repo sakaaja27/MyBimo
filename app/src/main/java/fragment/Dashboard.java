@@ -33,6 +33,7 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.mybimo.Main;
 import com.example.mybimo.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -487,11 +488,16 @@ private void fetchUser (String UserId) {
             return;
         }
 
+        // Menambahkan parameter unik untuk menghindari caching
+        String uniqueImageUrl = imageUrl + "?t=" + System.currentTimeMillis();
+
         try {
             Glide.with(requireContext())
-                    .load(imageUrl)
-                    .placeholder(R.drawable.icon_profile) // Gambar placeholder saat loading
-                    .error(R.drawable.icon_profile) // Gambar yang ditampilkan jika terjadi error
+                    .load(uniqueImageUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) // Nonaktifkan caching disk
+                    .skipMemoryCache(true) // Nonaktifkan caching memori
+                    .placeholder(R.drawable.icon_profile)
+                    .error(R.drawable.icon_profile)
                     .into(image_profil);
         } catch (Exception e) {
             Log.e("Dashboard", "Error loading image: " + e.getMessage());

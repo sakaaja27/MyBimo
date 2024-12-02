@@ -5,6 +5,7 @@ import static auth.DB_Contract.ip;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -113,11 +115,27 @@ public class Profile extends Fragment {
         }
     }
 
+    public interface LogoutListener {
+        void onLogout();
+    }
+
+    private LogoutListener logoutListener;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof LogoutListener) {
+            logoutListener = (LogoutListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement LogoutListener");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-         view =  inflater.inflate(R.layout.fragment_profile, container, false);
+        view =  inflater.inflate(R.layout.fragment_profile, container, false);
 
         btn_edit = view.findViewById(R.id.btn_editprofile);
         btn_reset = view.findViewById(R.id.btn_reset);
@@ -147,14 +165,10 @@ public class Profile extends Fragment {
 
             }
         });
-
-
-        btn_signout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                //buat agar sign out kembali ke halaman login
-                Intent intent = new Intent(getActivity(), Login_view.class);
-                startActivity(intent);
+        // Di dalam Activity yang memiliki tombol logout
+        btn_signout.setOnClickListener(v -> {
+            if (logoutListener != null){
+                logoutListener.onLogout();
             }
         });
 

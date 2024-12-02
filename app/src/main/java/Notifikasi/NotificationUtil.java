@@ -57,10 +57,10 @@ public class NotificationUtil {
         }
     }
 
-    private static void getTransaksiStatus(Context context,String userId){
+    private static void getTransaksiStatus(Context context, String userId) {
         String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getstatustransaksi.php?id_user=" + userId;
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -70,40 +70,49 @@ public class NotificationUtil {
                     } else {
                         JSONObject transaksi = transaksiArray.getJSONObject(0);
                         int status = transaksi.getInt("status");
-                        System.out.println("Status" + status);
+                        System.out.println("Status: " + status);
 
-                        SharedPreferences pref = context.getSharedPreferences(PREFS_NAME,Context.MODE_PRIVATE);
-                        int LastStatus = pref.getInt(LAST_STATUS_KEY,-1);
-                        if (status != LastStatus){
+                        SharedPreferences pref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                        String lastStatusKey = LAST_STATUS_KEY + "_" + userId; // Kunci unik untuk setiap userId
+                        int lastStatus = pref.getInt(lastStatusKey, -1);
+
+                        // Flag untuk notifikasi status 2
+                        boolean isStatus2Notified = pref.getBoolean("isStatus2Notified_" + userId, false);
+
+                        if (status != lastStatus) {
                             switch (status) {
                                 case 3:
                                     sendNotification(context, "MyBimo", "Status tidak aktif silahkan berlangganan lagi");
                                     break;
                                 case 2:
-                                    sendNotification(context, "MyBimo", "Status transaksi Ditolak");
+                                    if (!isStatus2Notified) {
+                                        sendNotification(context, "MyBimo", "Status transaksi Ditolak");
+                                        // Tandai bahwa notifikasi status 2 sudah ditampilkan
+                                        pref.edit().putBoolean("isStatus2Notified_" + userId, true).apply();
+                                    }
                                     break;
                                 case 1:
                                     sendNotification(context, "MyBimo", "Status transaksi telah disetujui");
                                     break;
                                 case 0:
-                                    sendNotification(context, "MyBimo", "Status transaki menunggu persetujuan ");
+                                    sendNotification(context, "MyBimo", "Status transaksi menunggu persetujuan");
                                     break;
                             }
-//                            simpan status baru buat status trakhir
-                            pref.edit().putInt(LAST_STATUS_KEY,status).apply();
+                            // Simpan status baru untuk status terakhir
+                            pref.edit().putInt(lastStatusKey, status).apply();
                         }
 
                     }
                 } catch (JSONException e) {
-                    System.out.println("GAGAL" + e.getMessage());
+                    System.out.println("GAGAL: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("error"+ error);
-                Toast.makeText(context,"GAGAL MENGAMBIL DATA",Toast.LENGTH_SHORT).show();
+                System.out.println("error: " + error);
+                Toast.makeText(context, "GAGAL MENGAMBIL DATA", Toast.LENGTH_SHORT).show();
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(context);

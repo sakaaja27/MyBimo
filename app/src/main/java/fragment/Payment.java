@@ -241,8 +241,8 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (uri != null) {
             try {
                 InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
-                byte[] imageData = getBytes(inputStream);
-                uploadToServer(imageData);
+                uploadImage(inputStream);
+
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             } catch (IOException e){
@@ -252,10 +252,17 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
         }
     }
 }
+    private void uploadImage(InputStream inputStream) throws IOException {
+        byte[] imageData = getBytes(inputStream);
 
+        // Cek ukuran file (maksimal 1 MB)
+        if (imageData.length > 1 * 1024 * 1024) { // 1 MB
+            Toast.makeText(getContext(), "Ukuran file terlalu besar. Maksimal 1 MB.", Toast.LENGTH_SHORT).show();
+            return; // Hentikan proses upload
+        }
 
-
-
+        uploadToServer(imageData);
+    }
     private void uploadToServer(byte[] imageData) {
         // URL endpoint untuk upload gambar
         String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/transaksi.php";

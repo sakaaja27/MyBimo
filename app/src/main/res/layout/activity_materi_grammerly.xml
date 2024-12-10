@@ -41,35 +41,46 @@
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/materi"
-        android:layout_marginTop="10dp"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:paddingHorizontal="10dp"
-        android:paddingBottom="16dp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/recycler_view"
-        android:gravity="center">
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_soal"
-            android:layout_width="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_sub"
-            android:paddingStart="75dp"
-            android:text="Bank Soal"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            style="@android:style/Widget.Button"
-            android:textAlignment="viewStart"
-            />
-    </LinearLayout>
-<!--    recycle view di deklarasikan di class yg kmu mau pake-->
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingHorizontal="10dp"
+                android:paddingBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_soal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_sub"
+                    android:paddingStart="75dp"
+                    android:text="Bank Soal"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    style="@android:style/Widget.Button"
+                    android:textAlignment="viewStart" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

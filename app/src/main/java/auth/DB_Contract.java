@@ -4,7 +4,7 @@ import org.w3c.dom.ls.LSOutput;
 
 public class DB_Contract {
 
-    public static String ip = "192.168.1.13";
-    public static final String urlRegister = "http://"+ip+"/website%20mybimo/mybimo/src/koneksi/register.php";
-    public static final String urlLogin = "http://"+ip+"/website%20mybimo/mybimo/src/koneksi/login.php";
+    public static String ip = "wstif23.myhost.id/kelas_c";
+    public static final String urlRegister = "http://"+ip+"/WEBSITE%20MYBIMO/mybimo/src/koneksi/register.php";
+    public static final String urlLogin = "http://"+ip+"/WEBSITE%20MYBIMO/mybimo/src/koneksi/login.php";
 }

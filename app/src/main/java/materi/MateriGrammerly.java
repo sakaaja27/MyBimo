@@ -110,7 +110,7 @@ public class MateriGrammerly extends AppCompatActivity {
         String id = getIntent().getStringExtra("id");
 
         // URL endpoint untuk mengambil data sub materi
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/submateri.php";
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/submateri.php";
 
         // Membuat request POST menggunakan StringRequest
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -158,7 +158,7 @@ public class MateriGrammerly extends AppCompatActivity {
                                 materiSubArrayList.add(new MateriSub(id,judul_materi, nama,fotoIcon, upload_file));
 
                                 materi.setText(judul_materi);
-                                String imageUrl = "http://" + ip +"/website%20mybimo/mybimo/src/getData/"+fotoIcon;
+                                String imageUrl = "http://" + ip +"/WEBSITE%20MYBIMO/mybimo/src/getData/"+fotoIcon;
                                 System.out.println("IMAGEICON"+imageUrl);
                                 Log.d("", imageUrl); // Log URL gambar
                                 if (imageUrl != null && !imageUrl.isEmpty()) {
@@ -198,7 +198,7 @@ public class MateriGrammerly extends AppCompatActivity {
     }
     // buat check apapakah dalam materi ini terdapat soal, jika ada maka button soal akan ditampilkan
     private void checkSoal(String id) {
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getSoal.php";
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getSoal.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

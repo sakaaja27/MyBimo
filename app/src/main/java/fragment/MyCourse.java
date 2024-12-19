@@ -89,7 +89,7 @@ public class MyCourse extends Fragment {
     }
 
     private void fetchHistory(String UserId) {
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getHistory.php?user_id=" + UserId;
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getHistory.php?user_id=" + UserId;
         Log.d(TAG, "Request URL: " + url);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,

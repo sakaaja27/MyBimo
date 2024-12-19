@@ -133,7 +133,7 @@ public class Zoom extends Fragment {
     }
 
     private void fetchZoom(){
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getZoom.php";
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getZoom.php";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -174,7 +174,7 @@ public class Zoom extends Fragment {
     }
 
     public void checkUserTransaction(String zoomId, String linkZoom) {
-        String urlTransaksi = "http://" + ip + "/website%20mybimo/mybimo/src/getData/gettransaksi.php?id_user=" + UserId;
+        String urlTransaksi = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/gettransaksi.php?id_user=" + UserId;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlTransaksi, null, new Response.Listener<JSONArray>() {
             @Override

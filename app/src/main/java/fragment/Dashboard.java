@@ -175,7 +175,7 @@ public class Dashboard extends Fragment{
     private void cekSoalQuiz() {
         generalQuiz.setEnabled(false);
 
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getGeneralQuiz.php";
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getGeneralQuiz.php";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -270,8 +270,8 @@ public class Dashboard extends Fragment{
     //materi
     private void fetchMateriData() {
         // URL untuk mengambil data materi
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getmateriawal.php";
-        String imageUrl = "http://" + ip +"/website%20mybimo/mybimo/src/getData/";
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getmateriawal.php";
+        String imageUrl = "http://" + ip +"/WEBSITE%20MYBIMO/mybimo/src/getData/";
 
         // Membuat request JSON Array untuk materi
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -375,7 +375,7 @@ public class Dashboard extends Fragment{
 
     // Metode untuk memeriksa status transaksi pengguna
     private void checkUserTransaction(String materiId) {
-        String urlTransaksi = "http://" + ip + "/website%20mybimo/mybimo/src/getData/gettransaksi.php?id_user=" + UserId; // Ganti userId dengan ID pengguna yang sesuai
+        String urlTransaksi = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/gettransaksi.php?id_user=" + UserId; // Ganti userId dengan ID pengguna yang sesuai
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlTransaksi, null,
                 new Response.Listener<JSONArray>() {
@@ -419,7 +419,7 @@ public class Dashboard extends Fragment{
 // Metode untuk mengambil data user dari server berdasarkan UserId
 private void fetchUser (String UserId) {
     // Membuat URL untuk request dengan menambahkan UserId sebagai parameter
-    String URL = "http://" + ip + "/mybimo/getData/getUser.php?id=" + UserId;
+    String URL = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getUser.php?id=" + UserId;
 
     // Membuat request JSON Array menggunakan Volley
     JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
@@ -447,7 +447,7 @@ private void fetchUser (String UserId) {
 
                             // Memeriksa apakah view sudah diinisialisasi
                             if (view != null) {
-                                String imageUrl = "http://" + ip + "/website%20mybimo/mybimo/src/getData/" + user.getUploadImage();
+                                String imageUrl = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/" + user.getUploadImage();
                                 System.out.println("IMAGE: " + imageUrl);
                                 Log.d("Image URL", imageUrl); // Log URL gambar
                                 loadImage(imageUrl); // Panggil metode loadImage untuk menampilkan gambar

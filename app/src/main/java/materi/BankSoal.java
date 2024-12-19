@@ -125,7 +125,7 @@ public class BankSoal extends AppCompatActivity {
     }
 
     private void tampilNilai(String userId, HashMap<Integer, String> jawabanUser ) {
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getJawaban.php";
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getJawaban.php";
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -185,7 +185,7 @@ public class BankSoal extends AppCompatActivity {
     private void fetchSoal() {
         String id = getIntent().getStringExtra("id");
         Log.d("BankSoal", "ID: " + id);
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getSoal.php";
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getSoal.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

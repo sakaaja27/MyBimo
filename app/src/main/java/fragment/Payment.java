@@ -65,7 +65,7 @@ import Adapter.VolleyMultipartRequest;
 import Payment.AfterPayment;
 
 public class Payment extends Fragment {
-    public static final String URL = "http://" + ip + "/mybimo/getData/payment.php";
+    public static final String URL = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/payment.php";
     private ImageView splashImage;
     private Button btn_upload;
     private String idPembayaran;
@@ -265,7 +265,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
     private void uploadToServer(byte[] imageData) {
         // URL endpoint untuk upload gambar
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/transaksi.php";
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/transaksi.php";
 
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(
                 Request.Method.POST, url, new Response.Listener<NetworkResponse>() {
@@ -324,7 +324,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 
     private void getTransaksiStatus(String UserId){
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getstatustransaksi.php?id_user=" + UserId;
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getstatustransaksi.php?id_user=" + UserId;
         System.out.println("API"+url);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

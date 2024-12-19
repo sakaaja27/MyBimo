@@ -80,7 +80,7 @@ public class NewPassword extends AppCompatActivity {
             Toast.makeText(NewPassword.this, "Password do not match", Toast.LENGTH_SHORT).show();
             return;
         }
-        String url = "http://"+ip+"/website%20mybimo/mybimo/src/getData/getNewPassword.php";
+        String url = "http://"+ip+"/WEBSITE%20MYBIMO/mybimo/src/getData/getNewPassword.php";
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override

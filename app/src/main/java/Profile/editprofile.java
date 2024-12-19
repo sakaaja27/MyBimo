@@ -206,7 +206,7 @@ public class editprofile extends AppCompatActivity {
 
     private void uploadImageToServer(byte[] imageData) {
         // URL endpoint untuk upload gambar
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getupdateuserimage.php";
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getupdateuserimage.php";
 
         // Nama file yang akan disimpan di server (menggunakan ID pengguna)
         String fileName = UserId + ".jpg";
@@ -283,7 +283,7 @@ public class editprofile extends AppCompatActivity {
 
     private void fetchUser(String UserId) {
         // Membuat URL untuk mengambil data user dari server
-        String URL = "http://" + ip + "/mybimo/getData/getUser.php?id=" + UserId;
+        String URL = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getUser.php?id=" + UserId;
 
         // Membuat request JSON Array ke server
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
@@ -306,9 +306,7 @@ public class editprofile extends AppCompatActivity {
                                 phone.setText(jsonObject.getString("phone"));
 
                                 // Membuat URL lengkap untuk gambar
-                                String imageUrl = "http://" + ip +
-                                        "/website%20mybimo/mybimo/src/getData/" +
-                                        jsonObject.getString("upload_image");
+                                String imageUrl = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/" + jsonObject.getString("upload_image");
 
                                 // Log URL gambar untuk debugging
                                 Log.d("", imageUrl);
@@ -403,8 +401,7 @@ public class editprofile extends AppCompatActivity {
         }
 
         // URL endpoint untuk update user
-        String URL = "http://" + ip +
-                "/website%20mybimo/mybimo/src/getData/getupdateuser.php";
+        String URL = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getupdateuser.php";
 
         // Membuat StringRequest untuk POST request
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,

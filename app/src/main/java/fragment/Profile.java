@@ -202,7 +202,7 @@ public class Profile extends Fragment {
     }
 
     private void fetchUser (String UserId) {
-        String URL = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getUser.php?id=" + UserId;
+        String URL = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getUser.php?id=" + UserId;
         Log.d("API URL", URL); // Log URL untuk debugging
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
@@ -225,7 +225,7 @@ public class Profile extends Fragment {
                                     auth_name.setText(user.getUsername());
                                     email.setText(user.getEmail());
 
-                                    String imageUrl = "http://" + ip +"/website%20mybimo/mybimo/src/getData/"+user.getUploadImage();
+                                    String imageUrl = "http://" + ip +"/WEBSITE%20MYBIMO/mybimo/src/getData/"+user.getUploadImage();
                                     System.out.println("IMAGE"+imageUrl);
                                     Log.d("", imageUrl); // Log URL gambar
                                     if (imageUrl != null && !imageUrl.isEmpty()) {
@@ -349,7 +349,7 @@ public class Profile extends Fragment {
                     return; // Early exit
                 }
 
-                String URL = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getPassword.php?id=" + UserId; // Use HTTPS
+                String URL = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getPassword.php?id=" + UserId; // Use HTTPS
 
                 // Create request for password reset
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,

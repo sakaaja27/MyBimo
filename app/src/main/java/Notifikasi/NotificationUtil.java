@@ -58,7 +58,7 @@ public class NotificationUtil {
     }
 
     private static void getTransaksiStatus(Context context, String userId) {
-        String url = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getstatustransaksi.php?id_user=" + userId;
+        String url = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getstatustransaksi.php?id_user=" + userId;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override

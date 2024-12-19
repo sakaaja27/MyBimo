@@ -74,7 +74,7 @@ public class idiom_materigrammar extends AppCompatActivity {
 
         submateriname.setText(getIntent().getStringExtra("nama_sub"));
         String url = getIntent().getStringExtra("upload_file");
-        String uploadFile = "http://" + ip + "/website%20mybimo/mybimo/src/getData/" + url;
+        String uploadFile = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/" + url;
         System.out.println("TET" + uploadFile);
         if (uploadFile != null && !uploadFile.isEmpty()) {
             new RetrievePDFFromUrl().execute(uploadFile);

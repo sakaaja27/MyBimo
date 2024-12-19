@@ -76,7 +76,7 @@ public class ForgotPassword extends AppCompatActivity {
         isSubmitting = true;
         send_email.setEnabled(false);
 
-        String URL = "http://" + ip + "/website%20mybimo/mybimo/src/getData/getOtp.php";
+        String URL = "http://" + ip + "/WEBSITE%20MYBIMO/mybimo/src/getData/getOtp.php";
         Log.d("ForgotPass", "Full URL: " + URL);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);

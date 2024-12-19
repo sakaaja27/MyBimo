@@ -123,7 +123,7 @@ public class OtpVerify extends AppCompatActivity {
     }
 
     private void requestOtp(String email) {
-        String URL = "http://"+ip+"/website%20mybimo/mybimo/src/getData/getOtp.php";
+        String URL = "http://"+ip+"/WEBSITE%20MYBIMO/mybimo/src/getData/getOtp.php";
         Log.d("ForgotPass", "Full URL: " + URL);
 
         RequestQueue requestQueue = Volley.newRequestQueue(OtpVerify.this);
